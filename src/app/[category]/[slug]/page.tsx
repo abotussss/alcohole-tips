@@ -217,7 +217,7 @@ export default async function DetailPage({ params }: Props) {
 
           <div className="rounded-[2rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-8 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
-              Variety
+              {variety.style === "red" ? "Red Variety" : "White Variety"}
             </p>
             <h1
               className="mt-3 text-5xl tracking-tight text-stone-900 sm:text-6xl"
@@ -264,6 +264,7 @@ export default async function DetailPage({ params }: Props) {
                   href={`#${country.slug}`}
                   className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition hover:border-stone-900 hover:bg-stone-100"
                 >
+                  <span className="mr-2">{country.flag}</span>
                   {country.country}
                 </a>
               ))}
@@ -296,6 +297,7 @@ export default async function DetailPage({ params }: Props) {
                     Country
                   </p>
                   <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+                    <span className="mr-3">{country.flag}</span>
                     {country.country}
                   </h2>
                 </div>

@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DrinkIllustration } from "@/components/DrinkIllustration";
 import {
-  type CategorySlug,
   categories,
   getCategory,
-  getCategoryCards,
+  getSakeBrands,
+  getWineVarietiesByStyle,
 } from "@/data/catalog";
 
 type Props = {
@@ -38,8 +38,6 @@ export default async function CategoryPage({ params }: Props) {
   if (!current) {
     notFound();
   }
-
-  const cards = getCategoryCards(category as CategorySlug);
 
   return (
     <main className="px-5 pb-16 pt-6 sm:px-8 lg:px-10">
@@ -87,40 +85,40 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
-      {current.status === "ready" ? (
+      {current.status === "ready" && category === "sake" ? (
         <section className="mx-auto mt-8 max-w-6xl">
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {cards.map((card) => (
+            {getSakeBrands().map((brand) => (
               <Link
-                key={card.slug}
-                href={`/${current.slug}/${card.slug}`}
+                key={brand.slug}
+                href={`/${current.slug}/${brand.slug}`}
                 className="rounded-[1.6rem] border border-white/50 bg-white/80 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)]"
               >
                 <div className="overflow-hidden rounded-[1.2rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
                   <DrinkIllustration
                     kind={current.slug}
-                    title={card.title}
-                    accent={card.accent}
-                    idBase={`${current.slug}-${card.slug}`}
+                    title={brand.name}
+                    accent={brand.accent}
+                    idBase={`${current.slug}-${brand.slug}`}
                   />
                 </div>
                 <div className="mt-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-                        {card.subtitle}
+                        Brand
                       </p>
                       <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
-                        {card.title}
+                        {brand.name}
                       </h2>
                     </div>
-                    <span className="text-sm text-stone-500">{card.meta}</span>
+                    <span className="text-sm text-stone-500">{brand.lineup.length} types</span>
                   </div>
                   <p className="mt-4 text-sm leading-7 text-stone-600">
-                    {card.summary}
+                    {brand.summary}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {card.highlights.map((item) => (
+                    {brand.highlights.map((item) => (
                       <span
                         key={item}
                         className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
@@ -134,13 +132,85 @@ export default async function CategoryPage({ params }: Props) {
             ))}
           </div>
         </section>
-      ) : (
+      ) : null}
+
+      {current.status === "ready" && category === "wine" ? (
+        <section className="mx-auto mt-8 max-w-6xl space-y-10">
+          {[
+            { title: "Red", label: "赤ワイン品種", items: getWineVarietiesByStyle("red") },
+            { title: "White", label: "白ワイン品種", items: getWineVarietiesByStyle("white") },
+          ].map((group) => (
+            <div key={group.title}>
+              <div className="mb-5 flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                    {group.title}
+                  </p>
+                  <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+                    {group.label}
+                  </h2>
+                </div>
+                <p className="text-sm text-stone-500">{group.items.length} varieties</p>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {group.items.map((variety) => (
+                  <Link
+                    key={variety.slug}
+                    href={`/${current.slug}/${variety.slug}`}
+                    className="rounded-[1.6rem] border border-white/50 bg-white/80 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)]"
+                  >
+                    <div className="overflow-hidden rounded-[1.2rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
+                      <DrinkIllustration
+                        kind={current.slug}
+                        title={variety.name}
+                        accent={variety.accent}
+                        idBase={`${current.slug}-${variety.slug}`}
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+                            {variety.style === "red" ? "Red Variety" : "White Variety"}
+                          </p>
+                          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+                            {variety.name}
+                          </h2>
+                        </div>
+                        <span className="text-sm text-stone-500">
+                          {variety.countries.length} countries
+                        </span>
+                      </div>
+                      <p className="mt-4 text-sm leading-7 text-stone-600">
+                        {variety.summary}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {variety.highlights.map((item) => (
+                          <span
+                            key={item}
+                            className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      ) : null}
+
+      {current.status !== "ready" ? (
         <section className="mx-auto mt-8 max-w-6xl rounded-[1.8rem] border border-white/50 bg-white/80 p-8 shadow-[0_16px_48px_rgba(48,30,20,0.08)] backdrop-blur-sm">
           <p className="text-sm leading-7 text-stone-600">
             このカテゴリはまだ準備中です。日本酒とワインの情報構造をそのまま横展開できるように土台だけ用意しています。
           </p>
         </section>
-      )}
+      ) : null}
     </main>
   );
 }
