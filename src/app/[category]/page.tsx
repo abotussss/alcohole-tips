@@ -61,20 +61,20 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       </div>
 
       <section className="mx-auto mt-4 grid max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="rounded-[2rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-8 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:p-10">
+        <div className="rounded-[1.6rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-6 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:rounded-[2rem] sm:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
             {current.latinTitle}
           </p>
           <h1
-            className="mt-3 text-5xl tracking-tight text-stone-900 sm:text-6xl"
+            className="mt-3 text-4xl tracking-tight text-stone-900 sm:text-6xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {current.title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-stone-600">
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-stone-600 sm:text-base sm:leading-8">
             {current.description}
           </p>
-          <div className="mt-8 rounded-[1.25rem] border border-stone-200/80 bg-white/72 p-5">
+          <div className="mt-8 rounded-[1.1rem] border border-stone-200/80 bg-white/72 p-4 sm:rounded-[1.25rem] sm:p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
               Structure
             </p>

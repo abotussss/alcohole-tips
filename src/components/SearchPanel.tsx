@@ -67,7 +67,7 @@ export function SearchPanel({ items, className = "", title, description }: Props
 
   return (
     <section
-      className={`rounded-[1.8rem] border border-white/50 bg-white/82 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm ${className}`}
+      className={`rounded-[1.35rem] border border-white/50 bg-white/82 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.8rem] sm:p-5 ${className}`}
     >
       {title ? (
         <div className="mb-4">
@@ -88,8 +88,8 @@ export function SearchPanel({ items, className = "", title, description }: Props
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="銘柄名、都道府県、品種、ワイン名で検索"
-          className="w-full bg-transparent px-2 py-2 text-base text-stone-900 outline-none placeholder:text-stone-400"
-        />
+            className="w-full bg-transparent px-2 py-2 text-[15px] text-stone-900 outline-none placeholder:text-stone-400 sm:text-base"
+          />
       </div>
 
       {query.trim() ? (

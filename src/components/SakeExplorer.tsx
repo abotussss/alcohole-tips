@@ -46,7 +46,7 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
   return (
     <Link
       href={`/sake/${brand.slug}`}
-      className="rounded-[1.5rem] border border-white/50 bg-white/82 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)]"
+      className="rounded-[1.2rem] border border-white/50 bg-white/82 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)] sm:rounded-[1.5rem] sm:p-5"
     >
       <div className="overflow-hidden rounded-[1.15rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
         <DrinkIllustration
@@ -62,7 +62,7 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
               {getSakeBrandPrefecture(brand)}
             </p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
               {brand.name}
             </h3>
           </div>
@@ -120,13 +120,13 @@ export function SakeExplorer({
 
   return (
     <section className="mx-auto mt-8 max-w-6xl">
-      <div className="mb-5 flex flex-wrap gap-3">
+        <div className="mb-5 flex flex-wrap gap-2 sm:gap-3">
         {tabLabels.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
+            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition sm:px-5 sm:py-3 ${
               activeTab === tab.id
                 ? "bg-stone-900 text-stone-50"
                 : "border border-stone-300 bg-white/80 text-stone-700 hover:border-stone-900"
@@ -147,18 +147,18 @@ export function SakeExplorer({
 
       {activeTab === "prefecture" ? (
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="rounded-[1.7rem] border border-white/50 bg-white/82 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm">
+          <article className="rounded-[1.35rem] border border-white/50 bg-white/82 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
               Prefecture
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
               都道府県から探す
             </h2>
             <div className="mt-5 rounded-[1rem] border border-stone-200 bg-stone-50 p-3">
               <select
                 value={selectedPrefecture}
                 onChange={(event) => setSelectedPrefecture(event.target.value)}
-                className="w-full bg-transparent px-2 py-2 text-base text-stone-900 outline-none"
+                className="w-full bg-transparent px-2 py-2 text-[15px] text-stone-900 outline-none sm:text-base"
               >
                 <option value="">都道府県を選択</option>
                 {prefectures.map((prefecture) => (
@@ -200,11 +200,11 @@ export function SakeExplorer({
 
           <div className="grid gap-5">
             {selectedPrefecture && prefectureGuide ? (
-              <article className="rounded-[1.7rem] border border-white/50 bg-white/82 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm">
+              <article className="rounded-[1.35rem] border border-white/50 bg-white/82 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
                   {prefectureGuide.region}
                 </p>
-                <h3 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
                   {prefectureGuide.name}
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-stone-600">
@@ -222,7 +222,7 @@ export function SakeExplorer({
                 </div>
               </article>
             ) : (
-              <article className="rounded-[1.7rem] border border-dashed border-stone-300 bg-white/65 p-6 text-sm leading-7 text-stone-500">
+            <article className="rounded-[1.35rem] border border-dashed border-stone-300 bg-white/65 p-5 text-sm leading-7 text-stone-500 sm:rounded-[1.7rem] sm:p-6">
                 47都道府県から選べます。都道府県を選ぶと、代表銘柄例と、このアプリ内で見られる関連ブランドを表示します。
               </article>
             )}
@@ -250,7 +250,7 @@ export function SakeExplorer({
                 key={value}
                 type="button"
                 onClick={() => setTaste(value)}
-                className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
+            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition sm:px-5 sm:py-3 ${
                   taste === value
                     ? "bg-stone-900 text-stone-50"
                     : "border border-stone-300 bg-white/80 text-stone-700"
@@ -280,7 +280,7 @@ export function SakeExplorer({
                 key={value}
                 type="button"
                 onClick={() => setServeStyle(value)}
-                className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
+            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition sm:px-5 sm:py-3 ${
                   serveStyle === value
                     ? "bg-stone-900 text-stone-50"
                     : "border border-stone-300 bg-white/80 text-stone-700"

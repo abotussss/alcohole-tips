@@ -14,7 +14,7 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
   return (
     <Link
       href={`/wine/${variety.slug}`}
-      className="rounded-[1.4rem] border border-white/50 bg-white/82 p-4 shadow-[0_12px_34px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_18px_46px_rgba(48,29,19,0.12)]"
+      className="rounded-[1.15rem] border border-white/50 bg-white/82 p-4 shadow-[0_12px_34px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_18px_46px_rgba(48,29,19,0.12)] sm:rounded-[1.4rem]"
     >
       <div className="grid gap-4 md:grid-cols-[140px_1fr]">
         <div className="overflow-hidden rounded-[1rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
@@ -31,7 +31,7 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
                 {variety.style === "red" ? "Red Variety" : "White Variety"}
               </p>
-              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+              <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
                 {variety.name}
               </h3>
             </div>
@@ -60,7 +60,7 @@ export function WineExplorer({ redVarieties, whiteVarieties }: Props) {
 
   return (
     <section className="mx-auto mt-8 max-w-6xl">
-      <div className="mb-5 flex flex-wrap gap-3">
+      <div className="mb-5 flex flex-wrap gap-2 sm:gap-3">
         {([
           { id: "red", label: "赤ワイン" },
           { id: "white", label: "白ワイン" },
@@ -69,7 +69,7 @@ export function WineExplorer({ redVarieties, whiteVarieties }: Props) {
             key={tab.id}
             type="button"
             onClick={() => setStyle(tab.id)}
-            className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
+            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition sm:px-5 sm:py-3 ${
               style === tab.id
                 ? "bg-stone-900 text-stone-50"
                 : "border border-stone-300 bg-white/80 text-stone-700"
@@ -85,7 +85,7 @@ export function WineExplorer({ redVarieties, whiteVarieties }: Props) {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
             {style === "red" ? "Red" : "White"}
           </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
             品種から国別へ
           </h2>
         </div>

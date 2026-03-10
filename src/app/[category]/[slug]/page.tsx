@@ -79,17 +79,17 @@ export default async function DetailPage({ params }: Props) {
             />
           </div>
 
-          <div className="rounded-[2rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-8 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:p-10">
+          <div className="rounded-[1.6rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-6 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:rounded-[2rem] sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
               Brand
             </p>
             <h1
-              className="mt-3 text-5xl tracking-tight text-stone-900 sm:text-6xl"
+              className="mt-3 text-4xl tracking-tight text-stone-900 sm:text-6xl"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {brand.name}
             </h1>
-            <p className="mt-5 text-base leading-8 text-stone-600">{brand.summary}</p>
+            <p className="mt-5 text-sm leading-7 text-stone-600 sm:text-base sm:leading-8">{brand.summary}</p>
             <p className="mt-4 text-sm leading-8 text-stone-600">{brand.story}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {brand.highlights.map((item) => (
@@ -125,7 +125,7 @@ export default async function DetailPage({ params }: Props) {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
                 Lineup
               </p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
                 {brand.name} の種類
               </h2>
             </div>
@@ -137,7 +137,7 @@ export default async function DetailPage({ params }: Props) {
               <article
                 key={bottle.name}
                 id={anchorId(bottle.name)}
-                className="rounded-[1.7rem] border border-white/50 bg-white/80 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm"
+                className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6"
               >
                 <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
                   <div>
@@ -146,7 +146,7 @@ export default async function DetailPage({ params }: Props) {
                         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
                           {bottle.style}
                         </p>
-                        <h3 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+                        <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
                           {bottle.name}
                         </h3>
                       </div>
@@ -181,7 +181,7 @@ export default async function DetailPage({ params }: Props) {
                     </div>
                   </div>
 
-                  <div className="rounded-[1.4rem] bg-[rgba(248,244,237,0.95)] p-4">
+                  <div className="rounded-[1.2rem] bg-[rgba(248,244,237,0.95)] p-3 sm:rounded-[1.4rem] sm:p-4">
                     <RadarChart metrics={bottle.radar} accent={brand.accent} compact />
                   </div>
                 </div>
@@ -222,17 +222,17 @@ export default async function DetailPage({ params }: Props) {
             />
           </div>
 
-          <div className="rounded-[2rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-8 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:p-10">
+          <div className="rounded-[1.6rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-6 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:rounded-[2rem] sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
               {variety.style === "red" ? "Red Variety" : "White Variety"}
             </p>
             <h1
-              className="mt-3 text-5xl tracking-tight text-stone-900 sm:text-6xl"
+              className="mt-3 text-4xl tracking-tight text-stone-900 sm:text-6xl"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {variety.name}
             </h1>
-            <p className="mt-5 text-base leading-8 text-stone-600">{variety.summary}</p>
+            <p className="mt-5 text-sm leading-7 text-stone-600 sm:text-base sm:leading-8">{variety.summary}</p>
             <p className="mt-4 text-sm leading-8 text-stone-600">{variety.story}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {variety.highlights.map((item) => (
@@ -248,7 +248,7 @@ export default async function DetailPage({ params }: Props) {
         </section>
 
         <section className="mx-auto mt-8 grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="rounded-[1.7rem] border border-white/50 bg-white/80 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm">
+          <article className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
               Profile
             </p>
@@ -257,7 +257,7 @@ export default async function DetailPage({ params }: Props) {
             </div>
           </article>
 
-          <article className="rounded-[1.7rem] border border-white/50 bg-white/80 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm">
+          <article className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
               Countries
             </p>
@@ -296,14 +296,14 @@ export default async function DetailPage({ params }: Props) {
             <article
               key={country.slug}
               id={country.slug}
-              className="rounded-[1.7rem] border border-white/50 bg-white/80 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm"
+              className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6"
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
                     Country
                   </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
                     <span className="mr-3">{country.flag}</span>
                     {country.country}
                   </h2>
@@ -316,12 +316,12 @@ export default async function DetailPage({ params }: Props) {
                 {country.bottles.map((bottle) => (
                   <div
                     key={bottle.name}
-                    className="rounded-[1.3rem] border border-stone-200/80 bg-[rgba(248,244,237,0.9)] p-5"
+                    className="rounded-[1.1rem] border border-stone-200/80 bg-[rgba(248,244,237,0.9)] p-4 sm:rounded-[1.3rem] sm:p-5"
                   >
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                       {bottle.region}
                     </p>
-                    <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+                    <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
                       {bottle.name}
                     </h3>
                     <p className="mt-1 text-sm font-medium text-stone-500">
