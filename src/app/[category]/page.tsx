@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DrinkIllustration } from "@/components/DrinkIllustration";
+import { SakeExplorer } from "@/components/SakeExplorer";
+import { SearchPanel } from "@/components/SearchPanel";
+import { WineExplorer } from "@/components/WineExplorer";
 import {
   categories,
   getCategory,
   getSakeBrands,
   getWineVarietiesByStyle,
 } from "@/data/catalog";
+import { prefectureGuides } from "@/data/prefectures";
+import { getSearchItems } from "@/data/search";
 
 type Props = {
   params: Promise<{ category: string }>;
+  searchParams: Promise<{ tab?: string; prefecture?: string }>;
 };
 
 export async function generateStaticParams() {
@@ -31,13 +37,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params, searchParams }: Props) {
   const { category } = await params;
+  const query = await searchParams;
   const current = getCategory(category);
 
   if (!current) {
     notFound();
   }
+
+  const searchItems = getSearchItems();
 
   return (
     <main className="px-5 pb-16 pt-6 sm:px-8 lg:px-10">
@@ -85,123 +94,36 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
-      {current.status === "ready" && category === "sake" ? (
-        <section className="mx-auto mt-8 max-w-6xl">
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {getSakeBrands().map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/${current.slug}/${brand.slug}`}
-                className="rounded-[1.6rem] border border-white/50 bg-white/80 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)]"
-              >
-                <div className="overflow-hidden rounded-[1.2rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
-                  <DrinkIllustration
-                    kind={current.slug}
-                    title={brand.name}
-                    accent={brand.accent}
-                    idBase={`${current.slug}-${brand.slug}`}
-                  />
-                </div>
-                <div className="mt-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-                        Brand
-                      </p>
-                      <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
-                        {brand.name}
-                      </h2>
-                    </div>
-                    <span className="text-sm text-stone-500">{brand.lineup.length} types</span>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-stone-600">
-                    {brand.summary}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {brand.highlights.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+      {current.status === "ready" ? (
+        <SearchPanel
+          items={searchItems}
+          className="mx-auto mt-8 max-w-6xl"
+          title="店で見る前に名前から探す"
+          description="日本酒の銘柄名、都道府県、ワイン品種、ワイン名から曖昧検索できます。"
+        />
       ) : null}
 
       {current.status === "ready" && category === "wine" ? (
-        <section className="mx-auto mt-8 max-w-6xl space-y-10">
-          {[
-            { title: "Red", label: "赤ワイン品種", items: getWineVarietiesByStyle("red") },
-            { title: "White", label: "白ワイン品種", items: getWineVarietiesByStyle("white") },
-          ].map((group) => (
-            <div key={group.title}>
-              <div className="mb-5 flex items-end justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                    {group.title}
-                  </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
-                    {group.label}
-                  </h2>
-                </div>
-                <p className="text-sm text-stone-500">{group.items.length} varieties</p>
-              </div>
+        <WineExplorer
+          redVarieties={getWineVarietiesByStyle("red")}
+          whiteVarieties={getWineVarietiesByStyle("white")}
+        />
+      ) : null}
 
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {group.items.map((variety) => (
-                  <Link
-                    key={variety.slug}
-                    href={`/${current.slug}/${variety.slug}`}
-                    className="rounded-[1.6rem] border border-white/50 bg-white/80 p-5 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)]"
-                  >
-                    <div className="overflow-hidden rounded-[1.2rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))]">
-                      <DrinkIllustration
-                        kind={current.slug}
-                        title={variety.name}
-                        accent={variety.accent}
-                        idBase={`${current.slug}-${variety.slug}`}
-                      />
-                    </div>
-                    <div className="mt-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-                            {variety.style === "red" ? "Red Variety" : "White Variety"}
-                          </p>
-                          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
-                            {variety.name}
-                          </h2>
-                        </div>
-                        <span className="text-sm text-stone-500">
-                          {variety.countries.length} countries
-                        </span>
-                      </div>
-                      <p className="mt-4 text-sm leading-7 text-stone-600">
-                        {variety.summary}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {variety.highlights.map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
+      {current.status === "ready" && category === "sake" ? (
+        <SakeExplorer
+          brands={getSakeBrands()}
+          prefectures={prefectureGuides}
+          initialTab={
+            query.tab === "prefecture" ||
+            query.tab === "taste" ||
+            query.tab === "serve" ||
+            query.tab === "brand"
+              ? query.tab
+              : "brand"
+          }
+          initialPrefecture={query.prefecture}
+        />
       ) : null}
 
       {current.status !== "ready" ? (

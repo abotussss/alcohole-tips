@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { DrinkIllustration } from "@/components/DrinkIllustration";
+import { SearchPanel } from "@/components/SearchPanel";
 import { getReadyCategories } from "@/data/catalog";
+import { getSearchItems } from "@/data/search";
 
 export default function Home() {
   const readyCategories = getReadyCategories();
+  const searchItems = getSearchItems();
 
   return (
     <main className="px-5 pb-16 pt-8 sm:px-8 lg:px-10">
@@ -16,15 +19,22 @@ export default function Home() {
             className="mt-4 text-5xl leading-[1.06] tracking-tight text-stone-900 sm:text-6xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Sake and Wine,
+            Know the label
             <br />
-            simply organized.
+            before you order.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-8 text-stone-600">
-            日本酒はブランドごとに中の種類を比較。ワインは品種から入り、国ごとの傾向と具体的なワイン例を見られるようにしています。
+            店では日本酒の銘柄名やワイン名だけを見かけることが多いので、先に特徴を掴めるようにしたWebアプリです。日本酒はブランド、都道府県、辛口甘口、飲み方から。ワインは赤白から入って、品種と国で整理します。
           </p>
         </div>
       </section>
+
+      <SearchPanel
+        items={searchItems}
+        className="mx-auto mt-6 max-w-5xl"
+        title="名前からすぐ探す"
+        description="日本酒の銘柄名、都道府県、ワイン品種、ワイン名で曖昧検索できます。"
+      />
 
       <section className="mx-auto mt-6 grid max-w-5xl gap-5 md:grid-cols-2">
         {readyCategories.map((category) => (

@@ -1,0 +1,69 @@
+export type PrefectureGuide = {
+  name: string;
+  slug: string;
+  region: string;
+  summary: string;
+  featuredBrands: string[];
+};
+
+export const prefectureGuides: PrefectureGuide[] = [
+  { name: "北海道", slug: "hokkaido", region: "北海道", summary: "寒冷地らしい切れ味とクリアさを持つ酒が多く、近年は個性派も増えています。", featuredBrands: ["男山", "国士無双", "上川大雪"] },
+  { name: "青森県", slug: "aomori", region: "東北", summary: "きれいな水と米の柔らかさを感じる、端正で飲みやすい酒が目立ちます。", featuredBrands: ["田酒", "豊盃", "陸奥八仙"] },
+  { name: "岩手県", slug: "iwate", region: "東北", summary: "透明感ある酒質に、やわらかな旨みを重ねるタイプが多い地域です。", featuredBrands: ["南部美人", "赤武", "あさ開"] },
+  { name: "宮城県", slug: "miyagi", region: "東北", summary: "食事に合わせやすい端正な酒から、芳醇なタイプまで幅広く揃います。", featuredBrands: ["浦霞", "一ノ蔵", "伯楽星"] },
+  { name: "秋田県", slug: "akita", region: "東北", summary: "フレッシュでモダンな酒から、旨みをきれいに出す酒まで個性が強い県です。", featuredBrands: ["新政", "雪の茅舎", "高清水"] },
+  { name: "山形県", slug: "yamagata", region: "東北", summary: "華やかさとやわらかい果実感を感じる人気銘柄が多く集まります。", featuredBrands: ["十四代", "出羽桜", "上喜元"] },
+  { name: "福島県", slug: "fukushima", region: "東北", summary: "バランスがよく、旨みときれいさの両立が目立つ県です。", featuredBrands: ["飛露喜", "写楽", "会津娘"] },
+  { name: "茨城県", slug: "ibaraki", region: "関東", summary: "古い蔵も多く、クラシックな魅力と現代的な酒の両方が見つかります。", featuredBrands: ["霧筑波", "来福", "武勇"] },
+  { name: "栃木県", slug: "tochigi", region: "関東", summary: "果実感と透明感を持つモダンな酒が多く、今の日本酒らしさを感じやすいです。", featuredBrands: ["仙禽", "鳳凰美田", "姿"] },
+  { name: "群馬県", slug: "gunma", region: "関東", summary: "やわらかな水由来の口当たりと、食中向きの安定感が魅力です。", featuredBrands: ["水芭蕉", "巌", "浅間山"] },
+  { name: "埼玉県", slug: "saitama", region: "関東", summary: "軽快さと親しみやすさを持つ酒が多く、日常酒から吟醸系まで幅があります。", featuredBrands: ["神亀", "花陽浴", "鏡山"] },
+  { name: "千葉県", slug: "chiba", region: "関東", summary: "海の幸に合わせやすい食中酒タイプから個性派まで見つけやすいです。", featuredBrands: ["甲子", "寒菊", "腰古井"] },
+  { name: "東京都", slug: "tokyo", region: "関東", summary: "数は多くないですが、端正で飲みやすい酒や個性的な地酒があります。", featuredBrands: ["澤乃井", "多満自慢", "屋守"] },
+  { name: "神奈川県", slug: "kanagawa", region: "関東", summary: "すっきりした飲み口の酒から、米の旨みをしっかり出す酒まで幅があります。", featuredBrands: ["いづみ橋", "残草蓬莱", "天青"] },
+  { name: "新潟県", slug: "niigata", region: "中部", summary: "淡麗辛口の代名詞で、キレと透明感を基準にしたい時の代表県です。", featuredBrands: ["久保田", "八海山", "菊水"] },
+  { name: "富山県", slug: "toyama", region: "中部", summary: "魚介と合わせやすいクリアな酒が多く、食中酒として非常に優秀です。", featuredBrands: ["満寿泉", "羽根屋", "立山"] },
+  { name: "石川県", slug: "ishikawa", region: "中部", summary: "穏やかな香りと上品な旨みで、北陸の食文化に寄り添う酒が目立ちます。", featuredBrands: ["手取川", "天狗舞", "加賀鳶"] },
+  { name: "福井県", slug: "fukui", region: "中部", summary: "上品で滑らかな酒質を持ち、洗練された食中酒が多い県です。", featuredBrands: ["黒龍", "梵", "九頭龍"] },
+  { name: "山梨県", slug: "yamanashi", region: "中部", summary: "水の良さを生かしたきれいな酒が多く、後味の透明感が出やすいです。", featuredBrands: ["七賢", "谷櫻", "笹一"] },
+  { name: "長野県", slug: "nagano", region: "中部", summary: "酸の美しさや食中での使いやすさがあり、現代的な酒も多い県です。", featuredBrands: ["真澄", "大信州", "明鏡止水"] },
+  { name: "岐阜県", slug: "gifu", region: "中部", summary: "硬派な辛口から果実感ある酒まで幅広く、山間の水の良さが出やすいです。", featuredBrands: ["三千盛", "小左衛門", "醴泉"] },
+  { name: "静岡県", slug: "shizuoka", region: "中部", summary: "静岡酵母由来のきれいな吟醸香が魅力で、上品な酒が揃います。", featuredBrands: ["磯自慢", "開運", "正雪"] },
+  { name: "愛知県", slug: "aichi", region: "中部", summary: "食との相性を意識した洗練型が多く、モダンな解釈の酒も強い県です。", featuredBrands: ["醸し人九平次", "蓬莱泉", "義侠"] },
+  { name: "三重県", slug: "mie", region: "近畿", summary: "クリーンで現代的な酒から、落ち着いた旨口まで幅広く揃います。", featuredBrands: ["作", "而今", "瀧自慢"] },
+  { name: "滋賀県", slug: "shiga", region: "近畿", summary: "米の旨みを丁寧に出す酒が多く、湖国らしい穏やかな食中酒が強いです。", featuredBrands: ["松の司", "七本鎗", "喜楽長"] },
+  { name: "京都府", slug: "kyoto", region: "近畿", summary: "伏見を中心に、やわらかく飲みやすいスタンダードな酒が多いです。", featuredBrands: ["月桂冠", "澤屋まつもと", "玉乃光"] },
+  { name: "大阪府", slug: "osaka", region: "近畿", summary: "数は多くないものの、親しみやすい食中酒や地元色のある酒があります。", featuredBrands: ["秋鹿", "呉春", "片野桜"] },
+  { name: "兵庫県", slug: "hyogo", region: "近畿", summary: "灘を中心に酒造りの王道地域で、力強さとキレの両方を持つ酒が多いです。", featuredBrands: ["白鶴", "剣菱", "播州一献"] },
+  { name: "奈良県", slug: "nara", region: "近畿", summary: "日本酒の古い歴史を持ち、モダンな軽快酒とクラシックな酒の両方があります。", featuredBrands: ["風の森", "みむろ杉", "春鹿"] },
+  { name: "和歌山県", slug: "wakayama", region: "近畿", summary: "旨みのふくらみと落ち着いたまとまりを感じる酒が多いです。", featuredBrands: ["紀土", "黒牛", "羅生門"] },
+  { name: "鳥取県", slug: "tottori", region: "中国", summary: "派手さより食中での使いやすさを持つ穏やかな酒が多い地域です。", featuredBrands: ["日置桜", "千代むすび", "諏訪泉"] },
+  { name: "島根県", slug: "shimane", region: "中国", summary: "やわらかな旨みと落ち着いた香りで、食事に合わせやすい酒が揃います。", featuredBrands: ["王祿", "李白", "出雲富士"] },
+  { name: "岡山県", slug: "okayama", region: "中国", summary: "雄町の産地として、米の旨みをしっかり出す酒に触れやすい県です。", featuredBrands: ["御前酒", "嘉美心", "燦然"] },
+  { name: "広島県", slug: "hiroshima", region: "中国", summary: "吟醸酒文化の中心の一つで、やわらかな吟醸香ときれいさが魅力です。", featuredBrands: ["賀茂鶴", "雨後の月", "賀茂金秀"] },
+  { name: "山口県", slug: "yamaguchi", region: "中国", summary: "モダンで香り高い酒が多く、全国的人気銘柄が揃う県です。", featuredBrands: ["獺祭", "東洋美人", "五橋"] },
+  { name: "徳島県", slug: "tokushima", region: "四国", summary: "旨みの芯を持ちつつ、地元料理に合わせやすい落ち着いた酒が多いです。", featuredBrands: ["三芳菊", "芳水", "鳴門鯛"] },
+  { name: "香川県", slug: "kagawa", region: "四国", summary: "軽快さとやわらかさを併せ持つ酒が多く、穏やかな印象になりやすいです。", featuredBrands: ["悦凱陣", "金陵", "川鶴"] },
+  { name: "愛媛県", slug: "ehime", region: "四国", summary: "すっきりしたきれいな酒質から、柔らかな旨口まで幅があります。", featuredBrands: ["石鎚", "梅錦", "寿喜心"] },
+  { name: "高知県", slug: "kochi", region: "四国", summary: "辛口でキレがあり、食中酒として強い印象を持つ県です。", featuredBrands: ["酔鯨", "司牡丹", "南"] },
+  { name: "福岡県", slug: "fukuoka", region: "九州", summary: "食中向きの安定感ある酒が多く、程よい旨みとキレを感じやすいです。", featuredBrands: ["田中六五", "庭のうぐいす", "繁桝"] },
+  { name: "佐賀県", slug: "saga", region: "九州", summary: "香りと果実感のバランスが良く、近年人気銘柄が非常に多い県です。", featuredBrands: ["鍋島", "七田", "東一"] },
+  { name: "長崎県", slug: "nagasaki", region: "九州", summary: "穏やかな食中酒タイプから、少し個性的な地酒まで見つけられます。", featuredBrands: ["福田", "六十餘洲", "よこやま"] },
+  { name: "熊本県", slug: "kumamoto", region: "九州", summary: "熊本酵母の系譜もあり、きれいで香りの良い酒に触れやすい県です。", featuredBrands: ["香露", "れいざん", "花の香"] },
+  { name: "大分県", slug: "oita", region: "九州", summary: "麦焼酎の印象が強い一方、日本酒も穏やかで食中向きの銘柄があります。", featuredBrands: ["西の関", "鷹来屋", "ちえびじん"] },
+  { name: "宮崎県", slug: "miyazaki", region: "九州", summary: "焼酎文化が強い県ですが、日本酒も小規模で個性的な銘柄があります。", featuredBrands: ["千徳", "夢の中まで", "初御代"] },
+  { name: "鹿児島県", slug: "kagoshima", region: "九州", summary: "焼酎が主流ながら、日本酒もきれいな地酒が少数精鋭で存在します。", featuredBrands: ["薩州正宗", "天賦", "西海の薫"] },
+  { name: "沖縄県", slug: "okinawa", region: "沖縄", summary: "日本酒文化は限定的ですが、泡盛文化を知る入口としても重要な地域です。", featuredBrands: ["黎明", "瑞穂", "春雨"] },
+];
+
+export const prefectureRegions = [
+  "北海道",
+  "東北",
+  "関東",
+  "中部",
+  "近畿",
+  "中国",
+  "四国",
+  "九州",
+  "沖縄",
+] as const;

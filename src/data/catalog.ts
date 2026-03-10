@@ -1,6 +1,8 @@
 export type CategorySlug = "sake" | "wine" | "beer" | "shochu" | "umeshu";
 export type Accent = "amber" | "ruby" | "forest" | "sunset" | "plum";
 export type WineStyle = "red" | "white";
+export type SakeTaste = "dry" | "balanced" | "sweet";
+export type SakeServeStyle = "cold" | "warm" | "hot";
 
 export type RadarMetric = {
   label: string;
@@ -2057,3 +2059,60 @@ export function getSakeBrand(slug: string) {
 export function getWineVariety(slug: string) {
   return wineVarieties.find((variety) => variety.slug === slug);
 }
+
+export function getFactValue(factsList: Fact[], label: string) {
+  return factsList.find((fact) => fact.label === label)?.value ?? "";
+}
+
+export function getSakeBrandPrefecture(brand: SakeBrand) {
+  return getFactValue(brand.facts, "都道府県");
+}
+
+export function inferSakeTaste(bottle: SakeBottle): SakeTaste {
+  const sweetness = bottle.radar.find((item) => item.label === "甘み")?.value ?? 3;
+
+  if (sweetness >= 3.6) {
+    return "sweet";
+  }
+
+  if (sweetness <= 2.7) {
+    return "dry";
+  }
+
+  return "balanced";
+}
+
+export function inferSakeServeStyles(bottle: SakeBottle): SakeServeStyle[] {
+  const tempText = getFactValue(bottle.facts, "おすすめ温度");
+  const styles = new Set<SakeServeStyle>();
+
+  if (tempText.includes("燗")) {
+    if (tempText.includes("熱燗")) {
+      styles.add("hot");
+    } else {
+      styles.add("warm");
+    }
+  }
+
+  if (tempText.includes("常温")) {
+    styles.add("warm");
+  }
+
+  if (tempText.match(/\b[6-9]|1[0-2]°C|10°C|12°C/)) {
+    styles.add("cold");
+  }
+
+  if (styles.size === 0) {
+    styles.add("cold");
+  }
+
+  return [...styles];
+}
+
+export type SearchItem = {
+  id: string;
+  title: string;
+  subtitle: string;
+  href: string;
+  keywords: string[];
+};

@@ -14,6 +14,12 @@ type Props = {
   params: Promise<{ category: string; slug: string }>;
 };
 
+const anchorId = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\u3040-\u30ff\u3400-\u9fff]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 export async function generateStaticParams() {
   return getDetailPaths();
 }
@@ -130,6 +136,7 @@ export default async function DetailPage({ params }: Props) {
             {brand.lineup.map((bottle) => (
               <article
                 key={bottle.name}
+                id={anchorId(bottle.name)}
                 className="rounded-[1.7rem] border border-white/50 bg-white/80 p-6 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm"
               >
                 <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
