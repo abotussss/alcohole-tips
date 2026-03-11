@@ -9,7 +9,7 @@ import {
   categories,
   getCategory,
   getSakeBrands,
-  getWineVarietiesByStyle,
+  getWineVarieties,
 } from "@/data/catalog";
 import { prefectureGuides } from "@/data/prefectures";
 import { getSearchItems } from "@/data/search";
@@ -76,7 +76,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           </p>
           <div className="mt-8 rounded-[1.1rem] border border-stone-200/80 bg-white/72 p-4 sm:rounded-[1.25rem] sm:p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-              Structure
+              見る順番
             </p>
             <p className="mt-3 text-xl font-semibold tracking-tight text-stone-900">
               {current.focus}
@@ -99,15 +99,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           items={searchItems}
           className="mx-auto mt-8 max-w-6xl"
           title="店で見る前に名前から探す"
-          description="日本酒の銘柄名、都道府県、ワイン品種、ワイン名から曖昧検索できます。"
+          description="日本酒の銘柄名、都道府県、ワインの品種・スタイル、ワイン名から曖昧検索できます。"
         />
       ) : null}
 
       {current.status === "ready" && category === "wine" ? (
-        <WineExplorer
-          redVarieties={getWineVarietiesByStyle("red")}
-          whiteVarieties={getWineVarietiesByStyle("white")}
-        />
+        <WineExplorer varieties={getWineVarieties()} />
       ) : null}
 
       {current.status === "ready" && category === "sake" ? (

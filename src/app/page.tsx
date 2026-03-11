@@ -33,7 +33,7 @@ export default function Home() {
         items={searchItems}
         className="mx-auto mt-6 max-w-5xl"
         title="名前からすぐ探す"
-        description="日本酒の銘柄名、都道府県、ワイン品種、ワイン名で曖昧検索できます。"
+        description="日本酒の銘柄名、都道府県、ワインの品種・スタイル、ワイン名で曖昧検索できます。"
       />
 
       <section className="mx-auto mt-6 grid max-w-5xl gap-4 md:grid-cols-2">

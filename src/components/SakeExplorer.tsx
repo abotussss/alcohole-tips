@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type {
   SakeBrand,
+  SakeBottle,
   SakeServeStyle,
   SakeTaste,
 } from "@/data/catalog";
@@ -41,6 +42,12 @@ const serveLabels: Record<SakeServeStyle, string> = {
   warm: "ぬる燗向き",
   hot: "熱燗向き",
 };
+
+const anchorId = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\u3040-\u30ff\u3400-\u9fff]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
   return (
@@ -84,6 +91,50 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
   );
 }
 
+function BottleCard({
+  brand,
+  bottle,
+  tag,
+}: {
+  brand: SakeBrand;
+  bottle: SakeBottle;
+  tag: string;
+}) {
+  return (
+    <Link
+      href={`/sake/${brand.slug}#${anchorId(bottle.name)}`}
+      className="rounded-[1rem] border border-white/50 bg-white/82 p-3 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(48,29,19,0.12)] sm:rounded-[1.5rem] sm:p-5"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
+            {getSakeBrandPrefecture(brand)} · {brand.name}
+          </p>
+          <h3 className="mt-1 text-base font-semibold tracking-tight text-stone-900 sm:mt-2 sm:text-2xl">
+            {bottle.name}
+          </h3>
+        </div>
+        <span className="rounded-full bg-stone-900 px-2.5 py-1 text-[10px] font-semibold text-stone-50 sm:px-3 sm:text-xs">
+          {tag}
+        </span>
+      </div>
+      <p className="mt-2 text-sm leading-6 text-stone-600 sm:mt-3 sm:leading-7">
+        {bottle.summary}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
+        {[bottle.style, ...bottle.highlights].slice(0, 3).map((item) => (
+          <span
+            key={item}
+            className="rounded-full bg-stone-100 px-2.5 py-1 text-[10px] font-medium text-stone-700 sm:px-3 sm:text-xs"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </Link>
+  );
+}
+
 export function SakeExplorer({
   brands,
   prefectures,
@@ -107,16 +158,20 @@ export function SakeExplorer({
 
   const brandsByTaste = useMemo(
     () =>
-      brands.filter((brand) =>
-        brand.lineup.some((bottle) => inferSakeTaste(bottle) === taste),
+      brands.flatMap((brand) =>
+        brand.lineup
+          .filter((bottle) => inferSakeTaste(bottle) === taste)
+          .map((bottle) => ({ brand, bottle })),
       ),
     [brands, taste],
   );
 
   const brandsByServe = useMemo(
     () =>
-      brands.filter((brand) =>
-        brand.lineup.some((bottle) => inferSakeServeStyles(bottle).includes(serveStyle)),
+      brands.flatMap((brand) =>
+        brand.lineup
+          .filter((bottle) => inferSakeServeStyles(bottle).includes(serveStyle))
+          .map((bottle) => ({ brand, bottle })),
       ),
     [brands, serveStyle],
   );
@@ -152,7 +207,7 @@ export function SakeExplorer({
         <div className="grid gap-4 sm:gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <article className="rounded-[1.2rem] border border-white/50 bg-white/82 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-              Prefecture
+              都道府県
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
               都道府県から探す
@@ -226,7 +281,7 @@ export function SakeExplorer({
                 {featuredLabels.length ? (
                   <div className="mt-5">
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                      Representative Labels
+                      代表ラベル
                     </p>
                     <div className="mt-3 grid gap-2">
                       {featuredLabels.map((label) => (
@@ -281,11 +336,12 @@ export function SakeExplorer({
             ))}
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {brandsByTaste.map((brand) => (
-              <BrandCard
-                key={brand.slug}
+            {brandsByTaste.map(({ brand, bottle }) => (
+              <BottleCard
+                key={`${brand.slug}-${bottle.name}`}
                 brand={brand}
-                note={`${tasteLabels[taste]}寄りの種類を含むブランド。店で見かけた時に方向性を掴みやすいです。`}
+                bottle={bottle}
+                tag={tasteLabels[taste]}
               />
             ))}
           </div>
@@ -311,11 +367,12 @@ export function SakeExplorer({
             ))}
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {brandsByServe.map((brand) => (
-              <BrandCard
-                key={brand.slug}
+            {brandsByServe.map(({ brand, bottle }) => (
+              <BottleCard
+                key={`${brand.slug}-${bottle.name}`}
                 brand={brand}
-                note={`${serveLabels[serveStyle]}の種類を含むブランド。温度帯で表情を変えやすい銘柄を探せます。`}
+                bottle={bottle}
+                tag={serveLabels[serveStyle]}
               />
             ))}
           </div>

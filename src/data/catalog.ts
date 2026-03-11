@@ -1,6 +1,6 @@
 export type CategorySlug = "sake" | "wine" | "beer" | "shochu" | "umeshu";
 export type Accent = "amber" | "ruby" | "forest" | "sunset" | "plum";
-export type WineStyle = "red" | "white";
+export type WineStyle = "red" | "white" | "rose" | "orange" | "natural";
 export type SakeTaste = "dry" | "balanced" | "sweet";
 export type SakeServeStyle = "cold" | "warm" | "hot";
 
@@ -93,8 +93,8 @@ export const categories: AlcoholCategory[] = [
     title: "ワイン",
     latinTitle: "Wine",
     description:
-      "赤と白を分けた上で、品種ごとに国別の特徴と代表的なワイン例を見られる構成です。",
-    focus: "赤 / 白 → 品種 → 国",
+      "赤白を軸にしつつ、ロゼ、オレンジ、自然派まで含めて、品種やスタイルごとに国別の特徴と代表的なワイン例を見られる構成です。",
+    focus: "スタイル → 品種・スタイル → 国",
     status: "ready",
     accent: "ruby",
   },
@@ -126,6 +126,24 @@ export const categories: AlcoholCategory[] = [
     accent: "plum",
   },
 ];
+
+export const wineStyleLabels: Record<WineStyle, string> = {
+  red: "赤ワイン",
+  white: "白ワイン",
+  rose: "ロゼ",
+  orange: "オレンジ",
+  natural: "自然派",
+};
+
+export const wineStyleCaptions: Record<WineStyle, string> = {
+  red: "赤",
+  white: "白",
+  rose: "ロゼ",
+  orange: "オレンジ",
+  natural: "自然派",
+};
+
+export const wineStyleOrder: WineStyle[] = ["red", "white", "rose", "orange", "natural"];
 
 const radar = (values: [number, number, number, number, number]): RadarMetric[] => [
   { label: "香り", value: values[0] },
@@ -2314,6 +2332,324 @@ const wineVarieties: WineVariety[] = [
           wineBottle("ソラリス 山梨 マスカット・ベーリーA", "マンズワイン", "山梨県甲斐市", "落ち着きのある上品なマスカット・ベーリーAとして知られる一本。", ["上品", "日本ワイン"]),
           wineBottle("山梨マスカット・ベーリーA", "マンズワイン", "山梨県", "チェリーやすみれのような華やかな香りで親しみやすいスタイル。", ["華やか", "飲みやすい"]),
           wineBottle("SUNTORY FROM FARM マスカット・ベーリーA 日本のロゼ", "サントリー", "日本", "マスカット・ベーリーAのチャーミングさを軽やかに楽しめる一本。", ["ロゼ", "チャーミング"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "grenache-rose",
+    name: "グルナッシュ・ロゼ",
+    style: "rose",
+    summary: "赤い果実の香りと軽やかな飲み心地が魅力で、ロゼの王道として掴みやすいスタイルです。",
+    story:
+      "プロヴァンスではドライで繊細、スペインではやや果実が豊か、日本では食事に寄り添うやさしいスタイルが見えやすいです。",
+    accent: "sunset",
+    highlights: ["ロゼの王道", "赤果実", "軽やか"],
+    facts: facts(
+      ["主なスタイル", "ドライで軽やかなロゼ"],
+      ["香りの方向", "いちご / ラズベリー / ハーブ"],
+      ["見るポイント", "果実の明るさと塩味感"],
+      ["相性", "前菜 / 生ハム / サラダ"],
+    ),
+    radar: radar([4.1, 3.0, 2.6, 4.3, 3.8]),
+    countries: [
+      wineCountry(
+        "france",
+        "フランス",
+        "🇫🇷",
+        "Provence",
+        "ロゼの基準になりやすい地域で、繊細でドライなバランスが魅力です。",
+        [
+          wineBottle("Whispering Angel", "Chateau d'Esclans", "Provence", "プロヴァンス・ロゼの代表格として知られる一本。", ["代表格", "ドライ"]),
+          wineBottle("Miraval Rose", "Miraval", "Provence", "果実味と塩味感の均衡が美しい人気ロゼ。", ["人気", "上品"]),
+        ],
+      ),
+      wineCountry(
+        "spain",
+        "スペイン",
+        "🇪🇸",
+        "Navarra / Rioja",
+        "プロヴァンスよりやや果実味が前に出やすく、親しみやすいロゼが多いです。",
+        [
+          wineBottle("Muga Rosado", "Bodegas Muga", "Rioja", "果実味と爽快感のバランスが良いスペインの代表例。", ["果実味", "爽快"]),
+          wineBottle("Gran Feudo Rosado", "Bodegas Chivite", "Navarra", "明るい果実感で入りやすい定番ロゼ。", ["定番", "親しみやすい"]),
+        ],
+      ),
+      wineCountry(
+        "japan",
+        "日本",
+        "🇯🇵",
+        "山梨 / 長野",
+        "日本では食事に寄り添うやさしいロゼが多く、和食にも合わせやすいです。",
+        [
+          wineBottle("Grace Rose", "GRACE WINE", "山梨県", "繊細な果実感で和食にも寄り添いやすい日本ロゼ。", ["日本ワイン", "繊細"]),
+          wineBottle("SUNTORY FROM FARM マスカット・ベーリーA ロゼ", "サントリー", "日本", "やわらかな果実感を軽やかに楽しみやすい一本。", ["日本ワイン", "やわらかい"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "pinot-noir-rose",
+    name: "ピノ・ノワール ロゼ",
+    style: "rose",
+    summary: "繊細な赤果実の香りときれいな酸が魅力で、上品なロゼを探したい時に見やすいスタイルです。",
+    story:
+      "フランスでは繊細で端正、ニュージーランドでは明るい果実感、日本では軽快さと食中性が見えやすいです。",
+    accent: "plum",
+    highlights: ["繊細", "上品なロゼ", "高酸"],
+    facts: facts(
+      ["主なスタイル", "上品で酸のきれいなロゼ"],
+      ["香りの方向", "さくらんぼ / 野いちご / 白い花"],
+      ["見るポイント", "酸の美しさ"],
+      ["相性", "サーモン / カルパッチョ / 鶏料理"],
+    ),
+    radar: radar([4.0, 2.9, 2.5, 4.5, 4.0]),
+    countries: [
+      wineCountry(
+        "france",
+        "フランス",
+        "🇫🇷",
+        "Loire / Bourgogne",
+        "ピノ・ノワールの繊細さをそのままロゼにしたような、端正な表現が多いです。",
+        [
+          wineBottle("Sancerre Rose", "Domaine Vacheron", "Loire", "高い酸と繊細な果実感を持つロワールの上品なロゼ。", ["高酸", "上品"]),
+          wineBottle("Marsannay Rose", "Domaine Sylvain Pataille", "Bourgogne", "ブルゴーニュらしい細さと余韻を楽しみやすい一本。", ["繊細", "余韻"]),
+        ],
+      ),
+      wineCountry(
+        "new-zealand",
+        "ニュージーランド",
+        "🇳🇿",
+        "Central Otago / Marlborough",
+        "果実味が明るく、爽快で親しみやすいピノ・ロゼが多いです。",
+        [
+          wineBottle("Cloudy Bay Pinot Noir Rose", "Cloudy Bay", "Marlborough", "明るいベリー感と爽快感がわかりやすい人気ロゼ。", ["人気", "爽快"]),
+          wineBottle("Akarua Rose", "Akarua", "Central Otago", "冷涼感ある果実味を持つNZピノ・ロゼの代表例。", ["冷涼感", "果実味"]),
+        ],
+      ),
+      wineCountry(
+        "japan",
+        "日本",
+        "🇯🇵",
+        "北海道 / 長野",
+        "日本のピノ系ロゼは軽やかで、料理に合わせやすいきれいな表現になりやすいです。",
+        [
+          wineBottle("農楽蔵 ロゼ", "農楽蔵", "北海道函館", "北海道らしい冷涼感とやさしい果実味が魅力。", ["日本ワイン", "冷涼感"]),
+          wineBottle("Vin Vie Pinot Noir Rose", "ヴィンヴィ", "長野県", "軽やかな酸と果実感で食中向きにまとまる一本。", ["日本ワイン", "食中向き"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "rkatsiteli",
+    name: "ルカツィテリ",
+    style: "orange",
+    summary: "オレンジワインの代表格として知られ、紅茶や柑橘皮のようなニュアンスを感じやすい白品種です。",
+    story:
+      "ジョージアではクヴェヴリ由来の奥行き、アメリカでは少し親しみやすい果実感、東欧では骨格あるスタイルが見えやすいです。",
+    accent: "amber",
+    highlights: ["オレンジワイン代表", "紅茶感", "タンニン"],
+    facts: facts(
+      ["主なスタイル", "皮由来のタンニンを持つオレンジ"],
+      ["香りの方向", "オレンジピール / 杏 / 紅茶"],
+      ["見るポイント", "渋みと香りの奥行き"],
+      ["相性", "スパイス料理 / 発酵料理 / 中華"],
+    ),
+    radar: radar([4.0, 2.6, 3.8, 3.7, 4.4]),
+    countries: [
+      wineCountry(
+        "georgia",
+        "ジョージア",
+        "🇬🇪",
+        "Kakheti",
+        "クヴェヴリ文化の本場で、ルカツィテリの深い香味とタンニンが最もわかりやすいです。",
+        [
+          wineBottle("Pheasant's Tears Rkatsiteli", "Pheasant's Tears", "Kakheti", "ジョージアのオレンジワイン入門として有名な一本。", ["本場", "有名"]),
+          wineBottle("Tbilvino Qvevris Rkatsiteli", "Tbilvino", "Kakheti", "クヴェヴリ由来の奥行きが見えやすい定番。", ["クヴェヴリ", "奥行き"]),
+        ],
+      ),
+      wineCountry(
+        "usa",
+        "アメリカ",
+        "🇺🇸",
+        "Finger Lakes / Virginia",
+        "本場より親しみやすい果実味を持ちつつ、オレンジらしい骨格も感じやすいです。",
+        [
+          wineBottle("Dr. Konstantin Frank Rkatsiteli", "Dr. Konstantin Frank", "Finger Lakes", "アメリカでのルカツィテリ定番の一つ。", ["定番", "高酸"]),
+          wineBottle("Rmpe-Rmpe Rkatsiteli", "Domaine Finot US", "Virginia", "少し柔らかな果実味を感じやすい低介入寄りの一本。", ["低介入", "果実味"]),
+        ],
+      ),
+      wineCountry(
+        "slovakia",
+        "スロバキア",
+        "🇸🇰",
+        "South Slovakia",
+        "東欧では骨格のあるオレンジとして見えやすく、香りもややスパイシーです。",
+        [
+          wineBottle("Strekov 1075 Rkatsiteli", "Strekov 1075", "South Slovakia", "自然派文脈でも知られる東欧ルカツィテリ。", ["自然派", "個性的"]),
+          wineBottle("Slobodne Rkatsiteli", "Slobodne Vinarsstvo", "South Slovakia", "紅茶感と塩味感が出やすい一本。", ["紅茶感", "塩味感"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "ribolla-gialla",
+    name: "リボッラ・ジャッラ",
+    style: "orange",
+    summary: "オレンジワイン文脈で非常に重要な品種で、皮由来の複雑さと塩味感を感じやすいです。",
+    story:
+      "フリウリでは洗練された皮のニュアンス、スロヴェニアではより自然派寄りの厚みも見えやすいです。",
+    accent: "forest",
+    highlights: ["フリウリ代表", "塩味感", "複雑"],
+    facts: facts(
+      ["主なスタイル", "複雑で塩味感あるオレンジ"],
+      ["香りの方向", "黄桃 / ハーブ / 茶葉"],
+      ["見るポイント", "塩味感とタンニンの細かさ"],
+      ["相性", "チーズ / きのこ料理 / 鶏肉"],
+    ),
+    radar: radar([3.9, 2.5, 3.9, 3.8, 4.5]),
+    countries: [
+      wineCountry(
+        "italy",
+        "イタリア",
+        "🇮🇹",
+        "Friuli",
+        "リボッラ・ジャッラの本拠地で、塩味感と複雑さの均衡が見えやすいです。",
+        [
+          wineBottle("Gravner Ribolla", "Gravner", "Friuli", "オレンジワインの歴史を語る上で外せない代表作。", ["代表作", "歴史的"]),
+          wineBottle("Radikon Ribolla Gialla", "Radikon", "Friuli", "自然派文脈でも象徴的な存在感を持つ一本。", ["自然派", "象徴的"]),
+        ],
+      ),
+      wineCountry(
+        "slovenia",
+        "スロヴェニア",
+        "🇸🇮",
+        "Brda",
+        "国境を挟んだスロヴェニア側でも、厚みあるオレンジの代表産地として有名です。",
+        [
+          wineBottle("Movia Rebula", "Movia", "Brda", "スロヴェニアのリボッラ系オレンジとして知名度が高い一本。", ["知名度", "自然派"]),
+          wineBottle("Klinec Rebula", "Klinec", "Brda", "塩味感とハーブ感が出やすい個性派。", ["塩味感", "ハーブ"]),
+        ],
+      ),
+      wineCountry(
+        "japan",
+        "日本",
+        "🇯🇵",
+        "山梨 / 北海道",
+        "日本では同品種そのものは少ないですが、オレンジワインの入口として近い感覚のスキンコンタクト白が広がっています。",
+        [
+          wineBottle("Coco Farm 甲州F.O.S.", "Coco Farm & Winery", "栃木県", "日本のスキンコンタクト白として非常にわかりやすい代表例。", ["日本のオレンジ", "代表例"]),
+          wineBottle("98WINEs 芒 NOBORI オレンジ", "98WINEs", "山梨県", "日本のオレンジワイン文脈で見やすい軽快な一本。", ["日本ワイン", "オレンジ"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "pet-nat",
+    name: "ペットナット",
+    style: "natural",
+    summary: "自然派ワイン文脈で非常に人気が高い、一次発酵の泡を閉じ込める軽快なスパークリングです。",
+    story:
+      "フランスでは自然派の定番、オーストラリアでは明るく親しみやすく、日本でも軽快な食中泡として広がっています。",
+    accent: "sunset",
+    highlights: ["自然派", "泡", "軽快"],
+    facts: facts(
+      ["主なスタイル", "にごり感を伴う軽快な泡"],
+      ["香りの方向", "青りんご / 柑橘 / ハーブ"],
+      ["見るポイント", "軽い濁りと素朴な泡"],
+      ["相性", "前菜 / フリット / 軽いチーズ"],
+    ),
+    radar: radar([4.2, 3.0, 2.6, 4.3, 3.8]),
+    countries: [
+      wineCountry(
+        "france",
+        "フランス",
+        "🇫🇷",
+        "Loire / Languedoc",
+        "自然派ワインの本場の一つで、素朴さと飲みやすさの均衡が見えやすいです。",
+        [
+          wineBottle("Triple Zero", "Domaine de la Taille aux Loups", "Loire", "ロワールの自然派泡として知名度の高い一本。", ["自然派", "有名"]),
+          wineBottle("Pet Nat", "La Grange Tiphaine", "Loire", "やさしい果実感と軽い濁りが魅力の一本。", ["軽やか", "やさしい"]),
+        ],
+      ),
+      wineCountry(
+        "australia",
+        "オーストラリア",
+        "🇦🇺",
+        "South Australia",
+        "果実感が明るく、自然派初心者でも入りやすいペットナットが多いです。",
+        [
+          wineBottle("Delinquente Weeping Juan Pet Nat", "Delinquente Wine Co", "Riverland", "オーストラリア自然派の代表的ペットナット。", ["代表的", "親しみやすい"]),
+          wineBottle("Jilly Wine Co Pet Nat", "Jilly Wine Co", "South Australia", "明るい果実感で気軽に楽しみやすい一本。", ["果実味", "カジュアル"]),
+        ],
+      ),
+      wineCountry(
+        "japan",
+        "日本",
+        "🇯🇵",
+        "山梨 / 宮城",
+        "日本でも軽快な自然派泡として広がっていて、食中で使いやすいです。",
+        [
+          wineBottle("Fattoria AL FIORE Frizzante", "Fattoria AL FIORE", "宮城県", "日本の自然派文脈で人気のある軽快な泡。", ["自然派", "日本ワイン"]),
+          wineBottle("Kisvin Petillant", "Kisvin Winery", "山梨県", "繊細な泡と果実感を持つ日本のペットナット例。", ["日本ワイン", "繊細"]),
+        ],
+      ),
+    ],
+  },
+  {
+    category: "wine",
+    slug: "low-intervention-chenin",
+    name: "低介入シュナン・ブラン",
+    style: "natural",
+    summary: "自然派ワインで非常に扱われることの多い白で、蜜感と酸の両立が魅力です。",
+    story:
+      "南アフリカでは張りのある果実感、ロワールでは繊細さ、日本ではやさしい食中性が見えやすいです。",
+    accent: "amber",
+    highlights: ["自然派白", "蜜感", "高酸"],
+    facts: facts(
+      ["主なスタイル", "蜜感と酸を両立する自然派白"],
+      ["香りの方向", "黄桃 / 蜜 / カモミール"],
+      ["見るポイント", "酸と旨みの同居"],
+      ["相性", "鶏料理 / 発酵バター / 白カビチーズ"],
+    ),
+    radar: radar([3.9, 2.8, 3.6, 4.1, 4.5]),
+    countries: [
+      wineCountry(
+        "south-africa",
+        "南アフリカ",
+        "🇿🇦",
+        "Swartland / Stellenbosch",
+        "自然派シュナン・ブランの重要産地で、張りのある果実感と塩味感が魅力です。",
+        [
+          wineBottle("Testalonga Baby Bandito Keep on Punching", "Testalonga", "Swartland", "南ア自然派シュナンの象徴的な一本。", ["自然派", "象徴的"]),
+          wineBottle("Mullineux Old Vines White", "Mullineux", "Swartland", "低介入文脈でも評価の高い複雑なブレンド。", ["複雑", "上質"]),
+        ],
+      ),
+      wineCountry(
+        "france",
+        "フランス",
+        "🇫🇷",
+        "Loire",
+        "ロワールではより繊細で、土壌や熟成によるニュアンスの差が見えやすいです。",
+        [
+          wineBottle("Le Haut Lieu Sec", "Huet", "Vouvray", "シュナン・ブランの繊細さと熟成感を見やすい定番。", ["繊細", "定番"]),
+          wineBottle("Les Bonnes Blanches", "Domaine Mosse", "Loire", "自然派ロワールの文脈で人気のある一本。", ["自然派", "やわらかい"]),
+        ],
+      ),
+      wineCountry(
+        "japan",
+        "日本",
+        "🇯🇵",
+        "山形 / 長野",
+        "日本では自然派寄りの白として、やさしい果実感と食中性のある表現が増えています。",
+        [
+          wineBottle("Fattoria AL FIORE Oro", "Fattoria AL FIORE", "宮城県", "低介入の白として日本の自然派文脈で人気がある一本。", ["日本ワイン", "自然派"]),
+          wineBottle("Vinoble Vineyard Blanc", "VOTANO WINE", "長野県", "日本の低介入白として食中向きにまとまる一本。", ["日本ワイン", "食中向き"]),
         ],
       ),
     ],

@@ -8,6 +8,7 @@ import {
   getDetailPaths,
   getSakeBrand,
   getWineVariety,
+  wineStyleLabels,
 } from "@/data/catalog";
 
 type Props = {
@@ -81,7 +82,7 @@ export default async function DetailPage({ params }: Props) {
 
           <div className="rounded-[1.6rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-6 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:rounded-[2rem] sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
-              Brand
+              銘柄
             </p>
             <h1
               className="mt-3 text-4xl tracking-tight text-stone-900 sm:text-6xl"
@@ -123,7 +124,7 @@ export default async function DetailPage({ params }: Props) {
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                Lineup
+                ラインナップ
               </p>
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
                 {brand.name} の種類
@@ -224,7 +225,7 @@ export default async function DetailPage({ params }: Props) {
 
           <div className="rounded-[1.6rem] border border-white/50 bg-[rgba(247,242,234,0.84)] p-6 shadow-[0_24px_80px_rgba(50,31,23,0.08)] backdrop-blur-sm sm:rounded-[2rem] sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
-              {variety.style === "red" ? "Red Variety" : "White Variety"}
+              {wineStyleLabels[variety.style]}
             </p>
             <h1
               className="mt-3 text-4xl tracking-tight text-stone-900 sm:text-6xl"
@@ -250,7 +251,7 @@ export default async function DetailPage({ params }: Props) {
         <section className="mx-auto mt-8 grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <article className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-              Profile
+              味わいプロフィール
             </p>
             <div className="mt-4">
               <RadarChart metrics={variety.radar} accent={variety.accent} />

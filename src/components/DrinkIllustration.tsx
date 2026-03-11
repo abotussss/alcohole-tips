@@ -17,10 +17,31 @@ const accentMap: Record<Accent, { start: string; end: string; glow: string }> = 
   plum: { start: "#bca5bf", end: "#5c3e61", glow: "#f0def3" },
 };
 
+const guideLabels: Record<CategorySlug, string> = {
+  sake: "銘柄ガイド",
+  wine: "品種ガイド",
+  beer: "スタイルガイド",
+  shochu: "原料ガイド",
+  umeshu: "味わいガイド",
+};
+
+function hashValue(value: string) {
+  return [...value].reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 1), 0);
+}
+
 export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
   const palette = accentMap[accent];
   const gradientId = `${idBase}-gradient`;
   const glowId = `${idBase}-glow`;
+  const patternId = `${idBase}-pattern`;
+  const hash = hashValue(title);
+  const stripeTilt = 18 + (hash % 12);
+  const stripeGap = 20 + (hash % 8);
+  const sealX = 186 + (hash % 20);
+  const sealY = 154 + (hash % 26);
+  const sealRadius = 12 + (hash % 8);
+  const secondaryLiquid =
+    kind === "wine" ? "#8b4450" : kind === "sake" ? "#efe6db" : palette.start;
   const liquidColor =
     kind === "wine"
       ? "#5f1f26"
@@ -46,6 +67,10 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           <stop offset="0%" stopColor={palette.glow} stopOpacity="0.95" />
           <stop offset="100%" stopColor={palette.glow} stopOpacity="0" />
         </radialGradient>
+        <pattern id={patternId} width={stripeGap} height={stripeGap} patternUnits="userSpaceOnUse" patternTransform={`rotate(${stripeTilt})`}>
+          <rect width={stripeGap} height={stripeGap} fill="transparent" />
+          <rect width="6" height={stripeGap} fill={`${palette.end}18`} />
+        </pattern>
       </defs>
 
       <rect width="520" height="380" rx="32" fill="#f6efe5" />
@@ -57,12 +82,16 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
         d="M0 290C93 234 168 236 255 280C340 322 412 331 520 286V380H0Z"
         fill={`${palette.end}16`}
       />
+      <rect x="36" y="42" width="156" height="112" rx="28" fill={`url(#${patternId})`} />
 
       {kind === "wine" ? (
         <>
           <rect x="162" y="88" width="72" height="182" rx="18" fill="#242120" />
           <rect x="173" y="103" width="50" height="122" rx="14" fill={`url(#${gradientId})`} />
           <rect x="182" y="137" width="32" height="54" rx="8" fill="#f4ede4" opacity="0.9" />
+          <rect x="187" y="146" width="22" height="10" rx="5" fill={`${palette.end}65`} />
+          <rect x="187" y="162" width="22" height="4" rx="2" fill={`${palette.end}35`} />
+          <circle cx={sealX} cy={sealY} r={sealRadius} fill={`${palette.glow}dd`} stroke={`${palette.end}55`} strokeWidth="2" />
           <path d="M326 110C352 110 366 130 366 149C366 190 334 207 334 220H318C318 207 286 190 286 149C286 130 301 110 326 110Z" fill="#f4ede4" opacity="0.94" />
           <path d="M300 150C300 135 311 126 326 126C341 126 352 135 352 150C352 176 332 186 326 192C320 186 300 176 300 150Z" fill={liquidColor} opacity="0.96" />
           <rect x="323" y="220" width="6" height="62" rx="3" fill="#f4ede4" opacity="0.94" />
@@ -97,8 +126,12 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           <rect x="165" y="78" width="66" height="182" rx="18" fill="#252222" />
           <rect x="176" y="99" width="44" height="124" rx="14" fill={`url(#${gradientId})`} />
           <rect x="181" y="137" width="34" height="54" rx="8" fill="#f5efe6" opacity="0.92" />
+          <rect x="187" y="146" width="22" height="10" rx="5" fill={`${palette.end}65`} />
+          <rect x="187" y="162" width="22" height="4" rx="2" fill={`${palette.end}35`} />
+          <circle cx={sealX} cy={sealY} r={sealRadius} fill={`${palette.glow}dd`} stroke={`${palette.end}55`} strokeWidth="2" />
           <path d="M310 145C346 145 372 171 372 203C372 235 346 262 310 262C274 262 248 235 248 203C248 171 274 145 310 145Z" fill="#f6f0e8" opacity="0.95" />
           <path d="M272 202C272 182 289 168 310 168C331 168 348 182 348 202V214H272Z" fill={liquidColor} opacity="0.9" />
+          <path d={`M272 200C283 190 295 188 310 188C324 188 336 192 348 200V214H272Z`} fill={secondaryLiquid} opacity="0.34" />
           <rect x="268" y="214" width="84" height="44" rx="18" fill="#f6f0e8" opacity="0.95" />
         </>
       )}
@@ -112,7 +145,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
         fontWeight="700"
         opacity="0.55"
       >
-        CURATED PROFILE
+        {guideLabels[kind]}
       </text>
       <text
         x="42"

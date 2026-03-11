@@ -3,6 +3,7 @@ import {
   getSakeBrandPrefecture,
   getSakeBrands,
   getWineVarieties,
+  wineStyleCaptions,
 } from "@/data/catalog";
 import { prefectureGuides } from "@/data/prefectures";
 
@@ -38,9 +39,9 @@ export function getSearchItems(): SearchItem[] {
     {
       id: `wine-variety-${variety.slug}`,
       title: variety.name,
-      subtitle: `ワイン品種 · ${variety.style === "red" ? "赤" : "白"}`,
+      subtitle: `ワイン ${wineStyleCaptions[variety.style]} · 品種/スタイル`,
       href: `/wine/${variety.slug}`,
-      keywords: [variety.name, variety.style === "red" ? "赤" : "白", ...variety.highlights],
+      keywords: [variety.name, wineStyleCaptions[variety.style], ...variety.highlights],
     },
     ...variety.countries.flatMap((country) => [
       {
