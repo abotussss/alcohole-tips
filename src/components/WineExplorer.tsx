@@ -36,7 +36,7 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
                 {wineStyleLabels[variety.style]}
               </p>
-              <h3 className="mt-1 text-[0.98rem] font-semibold leading-[1.25] tracking-tight text-stone-900 [word-break:keep-all] [overflow-wrap:normal] sm:mt-2 sm:text-[1.55rem] sm:leading-[1.22] lg:text-[1.8rem]">
+              <h3 className="mt-1 overflow-hidden text-[0.98rem] font-semibold leading-[1.3] tracking-tight text-stone-900 break-words [overflow-wrap:anywhere] sm:mt-2 sm:text-[1.5rem] sm:leading-[1.24] lg:text-[1.72rem]">
                 {variety.name}
               </h3>
             </div>
@@ -96,7 +96,7 @@ export function WineExplorer({ varieties }: Props) {
         <p className="text-sm text-stone-500">{filteredVarieties.length} items</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
         {filteredVarieties.map((variety) => (
           <VarietyCard key={variety.slug} variety={variety} />
         ))}
