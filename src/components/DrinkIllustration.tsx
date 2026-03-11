@@ -260,9 +260,11 @@ export function DrinkIllustration({ kind, title, accent, idBase, themeKey = "" }
               backdropFilter: kind === "sake" ? "none" : "blur(12px)",
             }}
           >
-            <p className="truncate text-[0.62rem] font-semibold tracking-[0.06em] text-white/80 sm:text-xs">
-              {kind === "sake" ? "BRAND PROFILE" : "STYLE PROFILE"}
-            </p>
+            {kind === "sake" ? null : (
+              <p className="truncate text-[0.62rem] font-semibold tracking-[0.06em] text-white/80 sm:text-xs">
+                STYLE PROFILE
+              </p>
+            )}
             <p
               className="truncate text-[0.88rem] font-semibold tracking-tight sm:text-base"
               style={{ color: kind === "sake" ? frame.frame : "#ffffff" }}
