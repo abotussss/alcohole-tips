@@ -30,17 +30,19 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
             idBase={`wine-explorer-${variety.slug}`}
           />
         </div>
-        <div>
-          <div className="flex items-start justify-between gap-2 sm:gap-3">
-            <div>
+        <div className="min-w-0">
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <div className="min-w-0">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
                 {wineStyleLabels[variety.style]}
               </p>
-              <h3 className="mt-1 text-base font-semibold tracking-tight text-stone-900 sm:mt-2 sm:text-[1.7rem] sm:leading-8">
+              <h3 className="mt-1 text-[0.98rem] font-semibold leading-[1.25] tracking-tight text-stone-900 [text-wrap:balance] sm:mt-2 sm:text-[1.55rem] sm:leading-[1.22] lg:text-[1.75rem]">
                 {variety.name}
               </h3>
             </div>
-            <span className="text-[11px] text-stone-500 sm:text-sm">{variety.countries.length} countries</span>
+            <span className="inline-flex w-fit items-center rounded-full bg-stone-100 px-2.5 py-1 text-[10px] font-medium text-stone-500 sm:px-3 sm:text-xs">
+              {variety.countries.length} countries
+            </span>
           </div>
           <p className="mt-2 hidden text-sm leading-7 text-stone-600 sm:mt-3 sm:block">{variety.summary}</p>
           <div className="mt-2 flex flex-wrap gap-1.5 sm:mt-3 sm:gap-2">
