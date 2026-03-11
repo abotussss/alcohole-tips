@@ -34,13 +34,13 @@ function hashValue(value: string) {
 function getDynamicSakeFrame(seed: string) {
   const hash = hashValue(seed);
   const palette = [
-    { frame: "#2e201d", surface: "#e4c870", glow: "#f5e8b7" },
-    { frame: "#2d231f", surface: "#d8c7a6", glow: "#efe7d5" },
-    { frame: "#2c221d", surface: "#d9b48f", glow: "#f0d8c1" },
-    { frame: "#2a2421", surface: "#cfc6bb", glow: "#ece6df" },
-    { frame: "#2c241f", surface: "#cbbd8f", glow: "#ebe1be" },
-    { frame: "#2f211d", surface: "#d8b97a", glow: "#f1deb0" },
-    { frame: "#2c211d", surface: "#d2a98b", glow: "#edd0bf" },
+    { frame: "#2d211d", surface: "#ead58b", glow: "#f6eabf" },
+    { frame: "#33261f", surface: "#e5d29a", glow: "#f2e8c7" },
+    { frame: "#372820", surface: "#e2cb86", glow: "#f3e3b5" },
+    { frame: "#2f2521", surface: "#dfcfad", glow: "#efe5d0" },
+    { frame: "#3a2a21", surface: "#e1c692", glow: "#f1dfbb" },
+    { frame: "#31231d", surface: "#e7d090", glow: "#f5e6bd" },
+    { frame: "#35271f", surface: "#dfc79d", glow: "#efe0c1" },
   ];
 
   return palette[hash % palette.length];
@@ -48,19 +48,19 @@ function getDynamicSakeFrame(seed: string) {
 
 function getSakeFrame(title: string, themeKey = "") {
   if (/獺祭|十四代|花陽浴/.test(title)) {
-    return { frame: "#2a1d18", surface: "#e7c968", glow: "#f5e7ad" };
+    return { frame: "#2d211b", surface: "#e8d184", glow: "#f7eab8" };
   }
 
   if (/新政|No\.6|陽乃鳥|亜麻猫|天蛙|ヴィリジアン/.test(title)) {
-    return { frame: "#1e2821", surface: "#bccb9a", glow: "#e3ebcf" };
+    return { frame: "#2e241d", surface: "#ddcea1", glow: "#efe7ce" };
   }
 
   if (/黒龍|九頭龍/.test(title)) {
-    return { frame: "#171516", surface: "#cfcfd1", glow: "#ececef" };
+    return { frame: "#2a2422", surface: "#ddd4c4", glow: "#f1ebe1" };
   }
 
   if (/久保田|八海山/.test(title)) {
-    return { frame: "#222325", surface: "#d9d9df", glow: "#f0f1f5" };
+    return { frame: "#302722", surface: "#ddd3be", glow: "#f0e8d8" };
   }
 
   if (/真澄|伯楽星|出羽桜|南部美人/.test(title)) {
@@ -68,18 +68,18 @@ function getSakeFrame(title: string, themeKey = "") {
   }
 
   if (/天狗舞|酔鯨|鍋島|田酒|飛露喜|日置桜/.test(title)) {
-    return { frame: "#2d1f1a", surface: "#d4ad87", glow: "#efd3b6" };
+    return { frame: "#33241d", surface: "#dec19a", glow: "#f0dcc0" };
   }
 
   if (/作|醸し人九平次|仙禽|寒菊|鳳凰美田/.test(title)) {
-    return { frame: "#212322", surface: "#cfc6b6", glow: "#ece4d8" };
+    return { frame: "#302720", surface: "#d8ccb7", glow: "#eee5d8" };
   }
 
   if (themeKey.startsWith("sake-prefecture-")) {
     return getDynamicSakeFrame(themeKey);
   }
 
-  return { frame: "#2e201d", surface: "#e5ca79", glow: "#f4e6b0" };
+  return { frame: "#2f221d", surface: "#e7d087", glow: "#f5e7ba" };
 }
 
 function getWineFrame(title: string, themeKey = "") {
