@@ -92,9 +92,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             idBase={`category-${current.slug}`}
             themeKey={
               current.slug === "wine"
-                ? "wine-style-red"
+                ? "wine-home"
                 : current.slug === "sake"
-                  ? "sake-prefecture-山口県"
+                  ? "sake-home"
                   : current.slug
             }
           />

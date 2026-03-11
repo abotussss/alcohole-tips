@@ -69,9 +69,9 @@ export default function Home() {
                   idBase={`home-${category.slug}`}
                   themeKey={
                     category.slug === "wine"
-                      ? "wine-style-red"
+                      ? "wine-home"
                       : category.slug === "sake"
-                        ? "sake-prefecture-山口県"
+                        ? "sake-home"
                         : category.slug
                   }
                 />

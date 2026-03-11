@@ -58,6 +58,10 @@ function getDynamicSakeFrame(seed: string) {
 }
 
 function getSakeFrame(title: string, themeKey = "") {
+  if (themeKey === "sake-home") {
+    return { frame: "#6c5435", surface: "#efd46f", glow: "#f7e9b7" };
+  }
+
   if (themeKey.startsWith("sake-prefecture-")) {
     return getDynamicSakeFrame(themeKey);
   }
@@ -95,6 +99,10 @@ function getSakeFrame(title: string, themeKey = "") {
 
 function getWineFrame(title: string, themeKey = "") {
   const styleKey = themeKey.replace("wine-style-", "");
+
+  if (themeKey === "wine-home") {
+    return { frame: "#5b1e21", surface: "#c9473a", glow: "#e28b7f" };
+  }
 
   if (styleKey === "white") {
     return { frame: "#72653f", surface: "#ead89f", glow: "#fbf1d1" };
