@@ -22,7 +22,7 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
       className="rounded-[1rem] border border-white/50 bg-white/82 p-3 shadow-[0_12px_34px_rgba(48,29,19,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_18px_46px_rgba(48,29,19,0.12)] sm:rounded-[1.4rem] sm:p-5 lg:p-6"
     >
       <div className="grid gap-3 sm:gap-4">
-        <div className="h-32 overflow-hidden rounded-[0.95rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))] sm:h-40 sm:rounded-[1rem] lg:h-44">
+        <div className="h-32 overflow-hidden rounded-[0.95rem] bg-[linear-gradient(180deg,rgba(248,244,237,1),rgba(234,225,214,0.92))] sm:h-44 sm:rounded-[1rem] lg:h-48">
           <DrinkIllustration
             kind="wine"
             title={variety.name}
@@ -35,7 +35,7 @@ function VarietyCard({ variety }: { variety: WineVariety }) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
               {wineStyleLabels[variety.style]}
             </p>
-            <h3 className="mt-1 min-h-[2.7rem] text-[1.04rem] font-semibold leading-[1.3] tracking-tight text-stone-900 [text-wrap:pretty] sm:mt-2 sm:min-h-[4rem] sm:text-[1.45rem] sm:leading-[1.24] lg:min-h-[4.4rem] lg:text-[1.68rem]">
+            <h3 className="mt-1 text-[1.02rem] font-semibold leading-[1.35] tracking-tight text-stone-900 [text-wrap:pretty] sm:mt-2 sm:text-[1.35rem] sm:leading-[1.3] lg:text-[1.55rem]">
               {variety.name}
             </h3>
             <span className="inline-flex w-fit items-center rounded-full bg-stone-100 px-2.5 py-1 text-[10px] font-medium text-stone-500 sm:px-3 sm:text-xs">
@@ -94,7 +94,7 @@ export function WineExplorer({ varieties }: Props) {
         <p className="text-sm text-stone-500">{filteredVarieties.length} items</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 2xl:grid-cols-3">
         {filteredVarieties.map((variety) => (
           <VarietyCard key={variety.slug} variety={variety} />
         ))}
