@@ -6,6 +6,7 @@ import { RadarChart } from "@/components/RadarChart";
 import {
   getCategory,
   getDetailPaths,
+  getSakeBrandPrefecture,
   getSakeBrand,
   getWineVariety,
   wineStyleLabels,
@@ -77,6 +78,7 @@ export default async function DetailPage({ params }: Props) {
               title={brand.name}
               accent={brand.accent}
               idBase={`sake-${brand.slug}`}
+              themeKey={`sake-prefecture-${getSakeBrandPrefecture(brand)}`}
             />
           </div>
 

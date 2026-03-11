@@ -34,13 +34,13 @@ function hashValue(value: string) {
 function getDynamicSakeFrame(seed: string) {
   const hash = hashValue(seed);
   const palette = [
-    { frame: "#2d211d", surface: "#ead58b", glow: "#f6eabf" },
-    { frame: "#33261f", surface: "#e5d29a", glow: "#f2e8c7" },
-    { frame: "#372820", surface: "#e2cb86", glow: "#f3e3b5" },
-    { frame: "#2f2521", surface: "#dfcfad", glow: "#efe5d0" },
-    { frame: "#3a2a21", surface: "#e1c692", glow: "#f1dfbb" },
-    { frame: "#31231d", surface: "#e7d090", glow: "#f5e6bd" },
-    { frame: "#35271f", surface: "#dfc79d", glow: "#efe0c1" },
+    { frame: "#7c6947", surface: "#ead58b", glow: "#f6eabf" },
+    { frame: "#87745a", surface: "#e5d29a", glow: "#f2e8c7" },
+    { frame: "#926f4e", surface: "#e2cb86", glow: "#f3e3b5" },
+    { frame: "#827565", surface: "#dfcfad", glow: "#efe5d0" },
+    { frame: "#92775d", surface: "#e1c692", glow: "#f1dfbb" },
+    { frame: "#856b4f", surface: "#e7d090", glow: "#f5e6bd" },
+    { frame: "#8f7358", surface: "#dfc79d", glow: "#efe0c1" },
   ];
 
   return palette[hash % palette.length];

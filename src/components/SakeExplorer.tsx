@@ -76,6 +76,7 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
           title={brand.name}
           accent={brand.accent}
           idBase={`sake-explorer-${brand.slug}`}
+          themeKey={`sake-prefecture-${getSakeBrandPrefecture(brand)}`}
         />
       </div>
       <div className="mt-3 sm:mt-5">
