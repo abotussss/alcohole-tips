@@ -33,12 +33,17 @@ function hashValue(value: string) {
 
 function getDynamicSakeFrame(seed: string) {
   const hash = hashValue(seed);
-  const hue = 20 + (hash % 170);
-  const surface = `hsl(${hue} 52% 72%)`;
-  const glow = `hsl(${hue} 72% 88%)`;
-  const frame = `hsl(${hue} 24% 17%)`;
+  const palette = [
+    { frame: "#2e201d", surface: "#e4c870", glow: "#f5e8b7" },
+    { frame: "#2d231f", surface: "#d8c7a6", glow: "#efe7d5" },
+    { frame: "#2c221d", surface: "#d9b48f", glow: "#f0d8c1" },
+    { frame: "#2a2421", surface: "#cfc6bb", glow: "#ece6df" },
+    { frame: "#2c241f", surface: "#cbbd8f", glow: "#ebe1be" },
+    { frame: "#2f211d", surface: "#d8b97a", glow: "#f1deb0" },
+    { frame: "#2c211d", surface: "#d2a98b", glow: "#edd0bf" },
+  ];
 
-  return { frame, surface, glow };
+  return palette[hash % palette.length];
 }
 
 function getSakeFrame(title: string, themeKey = "") {
@@ -237,16 +242,31 @@ export function DrinkIllustration({ kind, title, accent, idBase, themeKey = "" }
         <div className="absolute inset-0 opacity-80 mix-blend-soft-light" style={{ background: `radial-gradient(circle at 50% 18%, ${frame.glow} 0%, transparent 42%)` }} />
         <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/34 via-black/8 to-transparent" />
         <div className="absolute left-3 top-3">
-          <span className="inline-flex items-center rounded-full bg-white/88 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-stone-700 shadow-sm backdrop-blur-sm sm:text-[11px]">
+          <span
+            className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.14em] shadow-sm sm:text-[11px]"
+            style={{
+              backgroundColor: kind === "sake" ? `${frame.glow}` : "rgba(255,255,255,0.88)",
+              color: kind === "sake" ? frame.frame : "#44403c",
+            }}
+          >
             {fallbackLabels[kind]}
           </span>
         </div>
         <div className="absolute inset-x-3 bottom-3">
-          <div className="rounded-xl bg-white/18 px-3 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md">
+          <div
+            className="rounded-xl px-3 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]"
+            style={{
+              backgroundColor: kind === "sake" ? `${frame.surface}dd` : "rgba(255,255,255,0.18)",
+              backdropFilter: kind === "sake" ? "none" : "blur(12px)",
+            }}
+          >
             <p className="truncate text-[0.72rem] font-semibold tracking-[0.08em] text-white/80 sm:text-xs">
               {kind === "sake" ? "BRAND PROFILE" : "STYLE PROFILE"}
             </p>
-            <p className="truncate text-sm font-semibold tracking-tight sm:text-base">
+            <p
+              className="truncate text-sm font-semibold tracking-tight sm:text-base"
+              style={{ color: kind === "sake" ? frame.frame : "#ffffff" }}
+            >
               {title}
             </p>
           </div>
