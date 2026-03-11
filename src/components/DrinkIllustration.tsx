@@ -34,13 +34,24 @@ function hashValue(value: string) {
 function getDynamicSakeFrame(seed: string) {
   const hash = hashValue(seed);
   const palette = [
-    { frame: "#7c6947", surface: "#ead58b", glow: "#f6eabf" },
-    { frame: "#87745a", surface: "#e5d29a", glow: "#f2e8c7" },
-    { frame: "#926f4e", surface: "#e2cb86", glow: "#f3e3b5" },
-    { frame: "#827565", surface: "#dfcfad", glow: "#efe5d0" },
-    { frame: "#92775d", surface: "#e1c692", glow: "#f1dfbb" },
-    { frame: "#856b4f", surface: "#e7d090", glow: "#f5e6bd" },
-    { frame: "#8f7358", surface: "#dfc79d", glow: "#efe0c1" },
+    { frame: "#6f5834", surface: "#e4c66c", glow: "#f5e8af" },
+    { frame: "#7b6847", surface: "#e6d39b", glow: "#f3e9c8" },
+    { frame: "#7e5a40", surface: "#d8a97c", glow: "#edcfb5" },
+    { frame: "#6c4330", surface: "#cc7c58", glow: "#ebb59b" },
+    { frame: "#6d5d40", surface: "#c6b27a", glow: "#e7dbb7" },
+    { frame: "#556044", surface: "#a7b287", glow: "#d8dfc8" },
+    { frame: "#4f5a3e", surface: "#95a76d", glow: "#ced9b5" },
+    { frame: "#695f56", surface: "#c2b6aa", glow: "#e2dad4" },
+    { frame: "#5c4537", surface: "#ba9174", glow: "#ddc1af" },
+    { frame: "#6a4a3b", surface: "#ce8d70", glow: "#e8baa5" },
+    { frame: "#6d614f", surface: "#b5aa8f", glow: "#dbd4c3" },
+    { frame: "#5d4b3d", surface: "#c8aa87", glow: "#e6d2bc" },
+    { frame: "#3f596a", surface: "#8db6cb", glow: "#d4e6ef" },
+    { frame: "#42546f", surface: "#93a9d0", glow: "#d9e2f2" },
+    { frame: "#355b59", surface: "#82c0b8", glow: "#cfe9e5" },
+    { frame: "#4f4d75", surface: "#a39fd1", glow: "#dfddf3" },
+    { frame: "#3f5f50", surface: "#9ac2a5", glow: "#d6ead9" },
+    { frame: "#5b5871", surface: "#b7b1d1", glow: "#e5e1f0" },
   ];
 
   return palette[hash % palette.length];
