@@ -78,7 +78,7 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
               {getSakeBrandPrefecture(brand)}
             </p>
-            <h3 className="mt-1 line-clamp-2 min-h-10 text-[0.95rem] font-semibold leading-5 tracking-tight text-stone-900 sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8">
+            <h3 className="mt-1 min-h-10 overflow-hidden text-[0.95rem] font-semibold leading-5 tracking-tight text-stone-900 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8 sm:[-webkit-line-clamp:unset] sm:[display:block]">
               {brand.name}
             </h3>
           </div>
@@ -119,7 +119,7 @@ function BottleCard({
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
             {getSakeBrandPrefecture(brand)} · {brand.name}
           </p>
-          <h3 className="mt-1 line-clamp-2 min-h-10 text-[0.92rem] font-semibold leading-5 tracking-tight text-stone-900 sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8">
+          <h3 className="mt-1 min-h-10 overflow-hidden text-[0.92rem] font-semibold leading-5 tracking-tight text-stone-900 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8 sm:[-webkit-line-clamp:unset] sm:[display:block]">
             {getBottleCardTitle(brand, bottle)}
           </h3>
         </div>

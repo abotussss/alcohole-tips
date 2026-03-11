@@ -3454,13 +3454,35 @@ export function getSakeBrandPrefecture(brand: SakeBrand) {
 }
 
 export function inferSakeTaste(bottle: SakeBottle): SakeTaste {
-  const sweetness = bottle.radar.find((item) => item.label === "甘み")?.value ?? 3;
+  const descriptorText = [
+    bottle.name,
+    bottle.style,
+    bottle.summary,
+    bottle.notes,
+    ...bottle.highlights,
+    ...bottle.facts.map((fact) => fact.value),
+  ].join(" ");
 
-  if (sweetness >= 3.6) {
+  if (descriptorText.match(/超辛口|大辛口|辛口|ドライ|淡麗辛口/)) {
+    return "dry";
+  }
+
+  if (descriptorText.match(/甘口|甘酸|デザート|蜜感|貴醸|とろり|濃醇甘口/)) {
     return "sweet";
   }
 
-  if (sweetness <= 2.7) {
+  if (descriptorText.match(/バランス|均衡|食中酒|食中向き|中庸|まとまり/)) {
+    return "balanced";
+  }
+
+  const sweetness = bottle.radar.find((item) => item.label === "甘み")?.value ?? 3;
+  const sharpness = bottle.radar.find((item) => item.label === "キレ")?.value ?? 3.8;
+
+  if (sweetness >= 3.9 || (sweetness >= 3.6 && sharpness <= 3.3)) {
+    return "sweet";
+  }
+
+  if (sweetness <= 2.4 || (sweetness <= 2.8 && sharpness >= 4.4)) {
     return "dry";
   }
 
