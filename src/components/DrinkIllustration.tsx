@@ -76,7 +76,7 @@ function getHeroSource(kind: CategorySlug) {
   }
 
   if (kind === "wine") {
-    return "/images/abotussss___--v_7_b2da3a66-dd93-4d68-b98c-e17d7c41f37f_0.png";
+    return "/images/Gemini_Generated_Image_hn15v6hn15v6hn15.png";
   }
 
   return "";
@@ -167,11 +167,11 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
       }}
     >
       <div
-        className="absolute inset-[5%] rounded-[1.3rem] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]"
+        className="absolute inset-[4%] rounded-[1.35rem] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16)]"
         style={{ backgroundColor: frame.frame }}
       />
       <div
-        className="absolute inset-[8%] overflow-hidden rounded-[1.05rem]"
+        className="absolute inset-x-[6.5%] inset-y-[6.5%] overflow-hidden rounded-[1.15rem]"
         style={{ backgroundColor: frame.surface }}
       >
         <Image
@@ -179,13 +179,35 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           alt={title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
-          className={
-            kind === "sake"
-              ? "object-cover object-center"
-              : "object-cover object-center"
-          }
+          className="object-cover object-center"
           priority={false}
         />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              kind === "sake"
+                ? `linear-gradient(180deg, ${frame.surface}22 0%, transparent 28%, transparent 72%, ${frame.frame}18 100%)`
+                : `linear-gradient(180deg, ${frame.surface}10 0%, transparent 34%, transparent 68%, ${frame.frame}20 100%)`,
+            mixBlendMode: "multiply",
+          }}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/34 via-black/8 to-transparent" />
+        <div className="absolute left-3 top-3">
+          <span className="inline-flex items-center rounded-full bg-white/88 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-stone-700 shadow-sm backdrop-blur-sm sm:text-[11px]">
+            {fallbackLabels[kind]}
+          </span>
+        </div>
+        <div className="absolute inset-x-3 bottom-3">
+          <div className="rounded-xl bg-white/20 px-3 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md">
+            <p className="truncate text-[0.72rem] font-semibold tracking-[0.08em] text-white/80 sm:text-xs">
+              {kind === "sake" ? "BRAND PROFILE" : "VARIETY PROFILE"}
+            </p>
+            <p className="truncate text-sm font-semibold tracking-tight sm:text-base">
+              {title}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
