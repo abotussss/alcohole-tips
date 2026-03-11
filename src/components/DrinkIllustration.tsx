@@ -35,6 +35,30 @@ function getSakeFrame(title: string) {
     return { frame: "#2a1d18", surface: "#e7c968", glow: "#f5e7ad" };
   }
 
+  if (/新政|No\.6|陽乃鳥|亜麻猫|天蛙|ヴィリジアン/.test(title)) {
+    return { frame: "#1e2821", surface: "#bccb9a", glow: "#e3ebcf" };
+  }
+
+  if (/黒龍|九頭龍/.test(title)) {
+    return { frame: "#171516", surface: "#cfcfd1", glow: "#ececef" };
+  }
+
+  if (/久保田|八海山/.test(title)) {
+    return { frame: "#222325", surface: "#d9d9df", glow: "#f0f1f5" };
+  }
+
+  if (/真澄|伯楽星|出羽桜|南部美人/.test(title)) {
+    return { frame: "#2a2422", surface: "#d8d0c5", glow: "#f0e8dd" };
+  }
+
+  if (/天狗舞|酔鯨|鍋島|田酒|飛露喜|日置桜/.test(title)) {
+    return { frame: "#2d1f1a", surface: "#d4ad87", glow: "#efd3b6" };
+  }
+
+  if (/作|醸し人九平次|仙禽|寒菊|鳳凰美田/.test(title)) {
+    return { frame: "#212322", surface: "#cfc6b6", glow: "#ece4d8" };
+  }
+
   if (/新政|No\.6|仙禽/.test(title)) {
     return { frame: "#1f2620", surface: "#cad2a9", glow: "#e9edd6" };
   }
@@ -51,23 +75,27 @@ function getSakeFrame(title: string) {
 }
 
 function getWineFrame(title: string) {
-  if (/Chardonnay|Sauvignon|Riesling|甲州|Pinot Gris|Albarino/i.test(title)) {
-    return { frame: "#401817", surface: "#c94939", glow: "#dd7768" };
-  }
-
   if (/Rose|ロゼ/i.test(title)) {
-    return { frame: "#4a2028", surface: "#d06473", glow: "#e6a0a9" };
+    return { frame: "#6a2437", surface: "#df8da3", glow: "#f4c7d3" };
   }
 
   if (/Orange|オレンジ/i.test(title)) {
-    return { frame: "#542818", surface: "#cc6b34", glow: "#efae7f" };
+    return { frame: "#663116", surface: "#df8a34", glow: "#f5c78f" };
   }
 
   if (/Natural|自然派/i.test(title)) {
-    return { frame: "#32211d", surface: "#a14d3f", glow: "#d08d7e" };
+    return { frame: "#31402f", surface: "#889a63", glow: "#ced9b4" };
   }
 
-  return { frame: "#3b1716", surface: "#c94939", glow: "#dc7a6d" };
+  if (/Chardonnay|Sauvignon Blanc|Riesling|甲州|Pinot Gris|Albarino|Chenin Blanc|Semillon|Viognier|Gruner|白/i.test(title)) {
+    return { frame: "#7a6840", surface: "#e5d39a", glow: "#f8efd0" };
+  }
+
+  if (/Pinot Noir|Cabernet|Merlot|Syrah|Shiraz|Malbec|Sangiovese|Nebbiolo|Tempranillo|Zinfandel|Mourvedre|赤/i.test(title)) {
+    return { frame: "#401216", surface: "#9a3138", glow: "#df8790" };
+  }
+
+  return { frame: "#4a1a1d", surface: "#b2454b", glow: "#e79da4" };
 }
 
 function getHeroSource(kind: CategorySlug) {
@@ -188,11 +216,12 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           style={{
             background:
               kind === "sake"
-                ? `linear-gradient(180deg, ${frame.surface}22 0%, transparent 28%, transparent 72%, ${frame.frame}18 100%)`
-                : `linear-gradient(180deg, ${frame.surface}10 0%, transparent 34%, transparent 68%, ${frame.frame}20 100%)`,
+                ? `linear-gradient(180deg, ${frame.surface}28 0%, transparent 24%, transparent 70%, ${frame.frame}20 100%)`
+                : `linear-gradient(180deg, ${frame.surface}1f 0%, transparent 26%, transparent 66%, ${frame.frame}28 100%)`,
             mixBlendMode: "multiply",
           }}
         />
+        <div className="absolute inset-0 opacity-80 mix-blend-soft-light" style={{ background: `radial-gradient(circle at 50% 18%, ${frame.glow} 0%, transparent 42%)` }} />
         <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/34 via-black/8 to-transparent" />
         <div className="absolute left-3 top-3">
           <span className="inline-flex items-center rounded-full bg-white/88 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-stone-700 shadow-sm backdrop-blur-sm sm:text-[11px]">
@@ -200,9 +229,9 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           </span>
         </div>
         <div className="absolute inset-x-3 bottom-3">
-          <div className="rounded-xl bg-white/20 px-3 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md">
+          <div className="rounded-xl bg-white/18 px-3 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md">
             <p className="truncate text-[0.72rem] font-semibold tracking-[0.08em] text-white/80 sm:text-xs">
-              {kind === "sake" ? "BRAND PROFILE" : "VARIETY PROFILE"}
+              {kind === "sake" ? "BRAND PROFILE" : "STYLE PROFILE"}
             </p>
             <p className="truncate text-sm font-semibold tracking-tight sm:text-base">
               {title}
