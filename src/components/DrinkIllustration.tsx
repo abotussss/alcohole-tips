@@ -90,6 +90,10 @@ function getSakeLabelText(title: string) {
   return normalized.slice(0, 4);
 }
 
+function getSakeLabelLines(title: string) {
+  return [...getSakeLabelText(title)];
+}
+
 export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
   const palette = accentMap[accent];
   const gradientId = `${idBase}-gradient`;
@@ -103,7 +107,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
   const liquidWave = 186 + (hash % 10);
   const wineGlassTone = hash % 2 === 0 ? "#f3ebe2" : "#eee4d8";
   const sakeTheme = getSakeVisualTheme(hash, accent);
-  const sakeLabelText = getSakeLabelText(title);
+  const sakeLabelLines = getSakeLabelLines(title);
   const bottleOffset = (hash % 3) * 2 - 2;
   const liquidColor =
     kind === "wine"
@@ -147,104 +151,86 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
 
       {kind === "sake" ? (
         <>
-          <rect width="520" height="380" rx="32" fill={`url(#${sakeBgId})`} />
-          <circle cx="260" cy="146" r="168" fill={sakeTheme.aura} opacity="0.42" />
-          <circle cx="130" cy="88" r="72" fill="#ffffff" opacity="0.12" />
+          <rect width="520" height="380" rx="32" fill="#e5c86f" />
+          <rect width="520" height="380" rx="32" fill={`url(#${sakeBgId})`} opacity="0.42" />
+          <circle cx="260" cy="136" r="178" fill={sakeTheme.aura} opacity="0.22" />
           <path
-            d="M0 320C106 298 182 294 252 304C332 316 412 316 520 292V380H0Z"
+            d="M0 338C122 320 224 316 308 322C390 328 458 324 520 314V380H0Z"
             fill="#000000"
-            opacity="0.1"
+            opacity="0.08"
           />
-          <ellipse cx="290" cy="346" rx="122" ry="18" fill="#000000" opacity="0.16" />
+          <ellipse cx="260" cy="344" rx="108" ry="16" fill="#000000" opacity="0.16" />
           <g transform={`translate(${bottleOffset}, 0)`}>
-            <rect x="247" y="42" width="46" height="34" rx="9" fill={sakeTheme.cap} />
-            <rect x="242" y="74" width="56" height="18" rx="8" fill={sakeTheme.cap} opacity="0.94" />
+            <rect x="249" y="38" width="42" height="28" rx="8" fill={sakeTheme.cap} />
+            <rect x="246" y="66" width="48" height="10" rx="4" fill="#6f5135" opacity="0.5" />
+            <rect x="243" y="74" width="54" height="18" rx="8" fill={sakeTheme.cap} opacity="0.96" />
             <path
-              d="M227 82C227 64 241 52 260 52H280C299 52 313 64 313 82V98C313 120 307 140 299 160L282 214C277 230 275 246 275 262V326H245V262C245 246 243 230 238 214L221 160C213 140 207 120 207 98V82Z"
+              d="M227 80C227 64 239 54 256 54H284C301 54 313 64 313 80V100C313 126 304 156 296 184L286 226C282 244 280 262 280 282V330H240V282C240 262 238 244 234 226L224 184C216 156 207 126 207 100V80Z"
               fill={`url(#${sakeBottleId})`}
             />
             <path
-              d="M246 90C249 74 255 62 264 56H272C261 76 257 104 257 144C257 196 262 248 268 326H252C246 260 242 204 242 158C242 129 243 106 246 90Z"
+              d="M247 88C250 74 256 62 264 56H272C260 76 255 106 255 146C255 196 261 252 266 330H251C246 266 242 211 242 162C242 132 243 105 247 88Z"
               fill="url(#${sakeGlassId})"
-              opacity="0.66"
+              opacity="0.74"
             />
             <path
-              d="M264 90C270 86 278 88 283 93C274 121 273 180 287 326H275C270 258 267 193 267 132C267 115 266 101 264 90Z"
+              d="M263 90C270 86 278 88 284 92C277 126 277 186 289 330H277C271 270 268 206 268 142C268 118 267 101 263 90Z"
               fill="#d2f29a"
-              opacity="0.18"
+              opacity="0.15"
             />
-            <rect x="220" y="156" width="100" height="34" rx="16" fill={sakeTheme.label} />
+            <rect x="218" y="154" width="104" height="32" rx="15" fill={sakeTheme.label} />
             <text
               x="270"
-              y="178"
+              y="175"
               textAnchor="middle"
               fill={sakeTheme.ink}
-              fontSize="17"
+              fontSize="16"
               fontWeight="700"
               style={{ fontFamily: "var(--font-display)" }}
             >
               日本酒
             </text>
-            <rect x="214" y="210" width="112" height="106" rx="10" fill={sakeTheme.label} />
+            <rect x="214" y="196" width="112" height="118" rx="8" fill={sakeTheme.label} />
+            <g transform="translate(270 226)">
+              {sakeLabelLines.map((line, index) => (
+                <text
+                  key={`${line}-${index}`}
+                  x="0"
+                  y={index * 22}
+                  textAnchor="middle"
+                  fill={sakeTheme.ink}
+                  fontSize="21"
+                  fontWeight="800"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {line}
+                </text>
+              ))}
+            </g>
             <text
-              x="270"
-              y="236"
-              textAnchor="middle"
+              x="232"
+              y="304"
               fill={sakeTheme.ink}
-              fontSize="15"
+              fontSize="8"
               fontWeight="600"
-              opacity="0.66"
+              opacity="0.44"
             >
-              {guideLabels[kind]}
+              JUNMAI
             </text>
             <text
-              x="270"
-              y="260"
-              textAnchor="middle"
+              x="310"
+              y="214"
+              writingMode="tb"
+              glyphOrientationVertical="0"
               fill={sakeTheme.ink}
-              fontSize="34"
-              fontWeight="800"
-              letterSpacing="1"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {sakeLabelText}
-            </text>
-            <rect x="230" y="275" width="80" height="2" rx="1" fill={sakeTheme.ink} opacity="0.16" />
-            <text
-              x="270"
-              y="294"
-              textAnchor="middle"
-              fill={sakeTheme.ink}
-              fontSize="11"
+              fontSize="8"
               fontWeight="600"
-              opacity="0.58"
+              opacity="0.5"
             >
-              CURATED SAKE
+              SAKE ATLAS
             </text>
-            <rect x="228" y="298" width="16" height="16" rx="4" fill={sakeTheme.stamp} opacity="0.92" />
-            <rect x="250" y="300" width="56" height="6" rx="3" fill={sakeTheme.ink} opacity="0.12" />
+            <rect x="226" y="292" width="14" height="14" rx="4" fill={sakeTheme.stamp} opacity="0.9" />
           </g>
-          <text
-            x="42"
-            y="324"
-            fill={sakeTheme.ink}
-            fontSize="14"
-            letterSpacing="4"
-            fontWeight="700"
-            opacity="0.48"
-          >
-            {guideLabels[kind]}
-          </text>
-          <text
-            x="42"
-            y="348"
-            fill={sakeTheme.ink}
-            fontSize="28"
-            fontWeight="700"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {title}
-          </text>
         </>
       ) : kind === "wine" ? (
         <>

@@ -58,6 +58,12 @@ function getBottleCardTitle(brand: SakeBrand, bottle: SakeBottle) {
     : bottle.name;
 }
 
+function getUniqueBottleResults(
+  results: Array<{ brand: SakeBrand; bottle: SakeBottle }>,
+) {
+  return [...new Map(results.map((item) => [`${item.brand.slug}:${item.bottle.name}`, item])).values()];
+}
+
 function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
   return (
     <Link
@@ -168,20 +174,24 @@ export function SakeExplorer({
 
   const brandsByTaste = useMemo(
     () =>
-      brands.flatMap((brand) =>
-        brand.lineup
-          .filter((bottle) => inferSakeTaste(bottle) === taste)
-          .map((bottle) => ({ brand, bottle })),
+      getUniqueBottleResults(
+        brands.flatMap((brand) =>
+          brand.lineup
+            .filter((bottle) => inferSakeTaste(bottle) === taste)
+            .map((bottle) => ({ brand, bottle })),
+        ),
       ),
     [brands, taste],
   );
 
   const brandsByServe = useMemo(
     () =>
-      brands.flatMap((brand) =>
-        brand.lineup
-          .filter((bottle) => inferPrimarySakeServeStyle(bottle) === serveStyle)
-          .map((bottle) => ({ brand, bottle })),
+      getUniqueBottleResults(
+        brands.flatMap((brand) =>
+          brand.lineup
+            .filter((bottle) => inferPrimarySakeServeStyle(bottle) === serveStyle)
+            .map((bottle) => ({ brand, bottle })),
+        ),
       ),
     [brands, serveStyle],
   );
@@ -364,7 +374,7 @@ export function SakeExplorer({
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div key={taste} className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
             {brandsByTaste.map(({ brand, bottle }) => (
               <BottleCard
                 key={`${brand.slug}-${bottle.name}`}
@@ -395,7 +405,10 @@ export function SakeExplorer({
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            key={serveStyle}
+            className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-2 xl:grid-cols-3"
+          >
             {brandsByServe.map(({ brand, bottle }) => (
               <BottleCard
                 key={`${brand.slug}-${bottle.name}`}
