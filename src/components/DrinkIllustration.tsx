@@ -159,7 +159,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
 
   return (
     <div
-      className="relative h-full w-full overflow-hidden rounded-[inherit]"
+      className="relative aspect-[4/3] h-full w-full overflow-hidden rounded-[inherit]"
       aria-label={title}
       role="img"
       style={{
@@ -179,7 +179,8 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
           alt={title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
-          className="object-cover object-center"
+          quality={100}
+          className="object-contain object-center p-2 sm:p-3"
           priority={false}
         />
         <div
