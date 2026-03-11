@@ -267,16 +267,16 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
             <rect x="246" y="36" width="48" height="18" rx="6" fill={sakeTheme.cap} />
             <rect x="244" y="52" width="52" height="10" rx="4" fill={sakeTheme.cap} opacity="0.88" />
             <path
-              d="M221 70C221 55 233 46 248 46H292C307 46 319 55 319 70V88C319 111 313 135 303 157L292 183C286 198 284 214 284 232V330H256V232C256 214 254 198 248 183L237 157C227 135 221 111 221 88V70Z"
+              d="M248 46H292C304 46 314 56 314 68V92C314 108 320 124 333 145C344 163 350 184 350 208V330H190V208C190 184 196 163 207 145C220 124 226 108 226 92V68C226 56 236 46 248 46Z"
               fill={`url(#${sakeBottleId})`}
             />
             <path
-              d="M250 80C254 68 259 58 266 52H274C264 72 260 102 260 144C260 194 264 250 269 330H253C248 264 244 208 244 160C244 125 246 98 250 80Z"
+              d="M256 62C263 56 270 54 277 55C266 77 260 113 260 162C260 215 266 271 271 330H253C248 270 244 213 244 162C244 119 248 85 256 62Z"
               fill="url(#${sakeGlassId})"
               opacity="0.62"
             />
             <path
-              d="M266 80C272 77 279 79 284 84C279 116 280 178 290 330H279C273 268 270 206 270 140C270 113 269 96 266 80Z"
+              d="M286 62C294 68 299 79 302 95C296 124 295 172 304 330H293C287 260 284 200 284 150C284 110 285 81 286 62Z"
               fill="#d2f29a"
               opacity="0.16"
             />
@@ -292,7 +292,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
             >
               日本酒
             </text>
-            <rect x="217" y="186" width="106" height="120" rx="8" fill={sakeTheme.label} />
+            <rect x="212" y="182" width="116" height="124" rx="8" fill={sakeTheme.label} />
             <g transform="translate(270 215)">
               {sakeLabelLines.map((line, index) => (
                 <text
