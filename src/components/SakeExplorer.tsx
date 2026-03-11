@@ -49,6 +49,15 @@ const anchorId = (value: string) =>
     .replace(/[^a-z0-9\u3040-\u30ff\u3400-\u9fff]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const genericBottleNamePattern =
+  /^(大吟醸|純米大吟醸|純米吟醸|純米酒|特別純米|本醸造|特別本醸造|吟醸|清酒)$/;
+
+function getBottleCardTitle(brand: SakeBrand, bottle: SakeBottle) {
+  return genericBottleNamePattern.test(bottle.name)
+    ? `${brand.name} ${bottle.name}`
+    : bottle.name;
+}
+
 function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
   return (
     <Link
@@ -69,7 +78,7 @@ function BrandCard({ brand, note }: { brand: SakeBrand; note?: string }) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
               {getSakeBrandPrefecture(brand)}
             </p>
-            <h3 className="mt-1 text-base font-semibold tracking-tight text-stone-900 sm:mt-2 sm:text-2xl">
+            <h3 className="mt-1 line-clamp-2 min-h-10 text-[0.95rem] font-semibold leading-5 tracking-tight text-stone-900 sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8">
               {brand.name}
             </h3>
           </div>
@@ -110,8 +119,8 @@ function BottleCard({
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 sm:text-xs sm:tracking-[0.2em]">
             {getSakeBrandPrefecture(brand)} · {brand.name}
           </p>
-          <h3 className="mt-1 text-[0.95rem] font-semibold leading-5 tracking-tight text-stone-900 sm:mt-2 sm:text-2xl sm:leading-8">
-            {bottle.name}
+          <h3 className="mt-1 line-clamp-2 min-h-10 text-[0.92rem] font-semibold leading-5 tracking-tight text-stone-900 sm:mt-2 sm:min-h-0 sm:text-2xl sm:leading-8">
+            {getBottleCardTitle(brand, bottle)}
           </h3>
         </div>
         <span className="inline-flex h-6 w-[4.6rem] shrink-0 items-center justify-center rounded-full bg-stone-900 px-2 text-center text-[10px] font-semibold leading-none text-stone-50 sm:h-8 sm:w-[5.6rem] sm:px-3 sm:text-xs">

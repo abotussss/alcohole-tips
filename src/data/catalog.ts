@@ -3475,13 +3475,8 @@ export function inferSakeServeStyles(bottle: SakeBottle): SakeServeStyle[] {
     styles.add("hot");
   }
 
-  if (tempText.includes("ぬる燗")) {
+  if (tempText.includes("ぬる燗") || tempText.includes("燗")) {
     styles.add("warm");
-  }
-
-  if (tempText.includes("燗")) {
-    styles.add("warm");
-    styles.add("hot");
   }
 
   if (tempText.includes("常温")) {
