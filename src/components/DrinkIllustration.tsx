@@ -29,12 +29,111 @@ function hashValue(value: string) {
   return [...value].reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 1), 0);
 }
 
-function getSakeVisualTheme(hash: number, accent: Accent) {
+function getSakeVisualTheme(title: string, hash: number, accent: Accent) {
+  const normalized = title.replace(/\s+/g, "");
+  const preset = [
+    {
+      match: /獺祭|日本酒/,
+      theme: {
+        backgroundStart: "#e6cf83",
+        backgroundEnd: "#f2e2aa",
+        aura: "#f5e9c5",
+        frame: "#2e201d",
+        bottleDark: "#142922",
+        bottleMid: "#2a5540",
+        cap: "#b88f55",
+        label: "#f4efe4",
+        ink: "#231916",
+        stamp: "#a3523c",
+      },
+    },
+    {
+      match: /新政|No\.6|Colors/,
+      theme: {
+        backgroundStart: "#cfd3a6",
+        backgroundEnd: "#ebe5c1",
+        aura: "#eff0d6",
+        frame: "#2d2721",
+        bottleDark: "#173126",
+        bottleMid: "#305646",
+        cap: "#9f835d",
+        label: "#f6f2ea",
+        ink: "#1f1a16",
+        stamp: "#8d4d3b",
+      },
+    },
+    {
+      match: /黒龍|九頭龍/,
+      theme: {
+        backgroundStart: "#bdb8b0",
+        backgroundEnd: "#ded8cf",
+        aura: "#ece8e1",
+        frame: "#1f1b1b",
+        bottleDark: "#101717",
+        bottleMid: "#1f3230",
+        cap: "#8d7658",
+        label: "#f4f1eb",
+        ink: "#191617",
+        stamp: "#8c443b",
+      },
+    },
+    {
+      match: /十四代|花陽浴|鳳凰美田/,
+      theme: {
+        backgroundStart: "#ddc27b",
+        backgroundEnd: "#efddb1",
+        aura: "#f3e7c8",
+        frame: "#2a1d18",
+        bottleDark: "#1b2921",
+        bottleMid: "#35513a",
+        cap: "#ba9258",
+        label: "#f7f0e4",
+        ink: "#241915",
+        stamp: "#a14b35",
+      },
+    },
+    {
+      match: /久保田|八海山|伯楽星|真澄/,
+      theme: {
+        backgroundStart: "#d9d4c8",
+        backgroundEnd: "#ebe6dc",
+        aura: "#f2eee5",
+        frame: "#29221f",
+        bottleDark: "#16251f",
+        bottleMid: "#345243",
+        cap: "#9f835d",
+        label: "#f7f3eb",
+        ink: "#1f1a17",
+        stamp: "#9d4a38",
+      },
+    },
+    {
+      match: /天狗舞|酔鯨|鍋島|田酒/,
+      theme: {
+        backgroundStart: "#d7c0a0",
+        backgroundEnd: "#ead7bd",
+        aura: "#f1e6d5",
+        frame: "#2c211c",
+        bottleDark: "#18261f",
+        bottleMid: "#355340",
+        cap: "#aa8154",
+        label: "#f5efe5",
+        ink: "#221916",
+        stamp: "#aa4f3c",
+      },
+    },
+  ].find((item) => item.match.test(normalized));
+
+  if (preset) {
+    return preset.theme;
+  }
+
   const themes = [
     {
       backgroundStart: "#f0d88c",
       backgroundEnd: "#f6e8b4",
       aura: "#f8efcc",
+      frame: "#2e211d",
       bottleDark: "#183224",
       bottleMid: "#2d5d35",
       cap: "#c49a63",
@@ -46,6 +145,7 @@ function getSakeVisualTheme(hash: number, accent: Accent) {
       backgroundStart: "#e8c9a0",
       backgroundEnd: "#f3e0c2",
       aura: "#f7ebdb",
+      frame: "#30221d",
       bottleDark: "#142a21",
       bottleMid: "#45643d",
       cap: "#8c715d",
@@ -57,6 +157,7 @@ function getSakeVisualTheme(hash: number, accent: Accent) {
       backgroundStart: "#dfd8c2",
       backgroundEnd: "#efe9d6",
       aura: "#f6f2e8",
+      frame: "#2a2321",
       bottleDark: "#15241f",
       bottleMid: "#395a45",
       cap: "#ba9354",
@@ -68,6 +169,7 @@ function getSakeVisualTheme(hash: number, accent: Accent) {
       backgroundStart: accentMap[accent].start,
       backgroundEnd: "#f4eadb",
       aura: accentMap[accent].glow,
+      frame: "#2b201d",
       bottleDark: "#13221d",
       bottleMid: "#35513f",
       cap: "#a58259",
@@ -106,7 +208,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
   const labelY = 142 + (hash % 14);
   const liquidWave = 186 + (hash % 10);
   const wineGlassTone = hash % 2 === 0 ? "#f3ebe2" : "#eee4d8";
-  const sakeTheme = getSakeVisualTheme(hash, accent);
+  const sakeTheme = getSakeVisualTheme(title, hash, accent);
   const sakeLabelLines = getSakeLabelLines(title);
   const bottleOffset = (hash % 3) * 2 - 2;
   const liquidColor =
@@ -151,47 +253,47 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
 
       {kind === "sake" ? (
         <>
-          <rect width="520" height="380" rx="32" fill="#e5c86f" />
-          <rect width="520" height="380" rx="32" fill={`url(#${sakeBgId})`} opacity="0.42" />
-          <circle cx="260" cy="136" r="178" fill={sakeTheme.aura} opacity="0.22" />
+          <rect width="520" height="380" rx="32" fill={sakeTheme.frame} />
+          <rect x="14" y="16" width="492" height="348" rx="28" fill="#e5c86f" />
+          <rect x="14" y="16" width="492" height="348" rx="28" fill={`url(#${sakeBgId})`} opacity="0.5" />
+          <circle cx="260" cy="142" r="168" fill={sakeTheme.aura} opacity="0.3" />
           <path
-            d="M0 338C122 320 224 316 308 322C390 328 458 324 520 314V380H0Z"
+            d="M14 316C136 298 232 298 312 304C390 310 448 308 506 300V364H14Z"
             fill="#000000"
-            opacity="0.08"
+            opacity="0.07"
           />
-          <ellipse cx="260" cy="344" rx="108" ry="16" fill="#000000" opacity="0.16" />
+          <ellipse cx="260" cy="330" rx="104" ry="16" fill="#000000" opacity="0.14" />
           <g transform={`translate(${bottleOffset}, 0)`}>
-            <rect x="249" y="38" width="42" height="28" rx="8" fill={sakeTheme.cap} />
-            <rect x="246" y="66" width="48" height="10" rx="4" fill="#6f5135" opacity="0.5" />
-            <rect x="243" y="74" width="54" height="18" rx="8" fill={sakeTheme.cap} opacity="0.96" />
+            <rect x="246" y="36" width="48" height="18" rx="6" fill={sakeTheme.cap} />
+            <rect x="244" y="52" width="52" height="10" rx="4" fill={sakeTheme.cap} opacity="0.88" />
             <path
-              d="M227 80C227 64 239 54 256 54H284C301 54 313 64 313 80V100C313 126 304 156 296 184L286 226C282 244 280 262 280 282V330H240V282C240 262 238 244 234 226L224 184C216 156 207 126 207 100V80Z"
+              d="M221 70C221 55 233 46 248 46H292C307 46 319 55 319 70V88C319 111 313 135 303 157L292 183C286 198 284 214 284 232V330H256V232C256 214 254 198 248 183L237 157C227 135 221 111 221 88V70Z"
               fill={`url(#${sakeBottleId})`}
             />
             <path
-              d="M247 88C250 74 256 62 264 56H272C260 76 255 106 255 146C255 196 261 252 266 330H251C246 266 242 211 242 162C242 132 243 105 247 88Z"
+              d="M250 80C254 68 259 58 266 52H274C264 72 260 102 260 144C260 194 264 250 269 330H253C248 264 244 208 244 160C244 125 246 98 250 80Z"
               fill="url(#${sakeGlassId})"
-              opacity="0.74"
+              opacity="0.62"
             />
             <path
-              d="M263 90C270 86 278 88 284 92C277 126 277 186 289 330H277C271 270 268 206 268 142C268 118 267 101 263 90Z"
+              d="M266 80C272 77 279 79 284 84C279 116 280 178 290 330H279C273 268 270 206 270 140C270 113 269 96 266 80Z"
               fill="#d2f29a"
-              opacity="0.15"
+              opacity="0.16"
             />
-            <rect x="218" y="154" width="104" height="32" rx="15" fill={sakeTheme.label} />
+            <rect x="220" y="146" width="100" height="28" rx="14" fill={sakeTheme.label} />
             <text
               x="270"
-              y="175"
+              y="164"
               textAnchor="middle"
               fill={sakeTheme.ink}
-              fontSize="16"
+              fontSize="14"
               fontWeight="700"
               style={{ fontFamily: "var(--font-display)" }}
             >
               日本酒
             </text>
-            <rect x="214" y="196" width="112" height="118" rx="8" fill={sakeTheme.label} />
-            <g transform="translate(270 226)">
+            <rect x="217" y="186" width="106" height="120" rx="8" fill={sakeTheme.label} />
+            <g transform="translate(270 215)">
               {sakeLabelLines.map((line, index) => (
                 <text
                   key={`${line}-${index}`}
@@ -199,7 +301,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
                   y={index * 22}
                   textAnchor="middle"
                   fill={sakeTheme.ink}
-                  fontSize="21"
+                  fontSize="20"
                   fontWeight="800"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
@@ -208,8 +310,8 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
               ))}
             </g>
             <text
-              x="232"
-              y="304"
+              x="230"
+              y="298"
               fill={sakeTheme.ink}
               fontSize="8"
               fontWeight="600"
@@ -218,8 +320,8 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
               JUNMAI
             </text>
             <text
-              x="310"
-              y="214"
+              x="306"
+              y="202"
               writingMode="tb"
               glyphOrientationVertical="0"
               fill={sakeTheme.ink}
@@ -229,7 +331,7 @@ export function DrinkIllustration({ kind, title, accent, idBase }: Props) {
             >
               SAKE ATLAS
             </text>
-            <rect x="226" y="292" width="14" height="14" rx="4" fill={sakeTheme.stamp} opacity="0.9" />
+            <rect x="226" y="286" width="14" height="14" rx="4" fill={sakeTheme.stamp} opacity="0.9" />
           </g>
         </>
       ) : kind === "wine" ? (
