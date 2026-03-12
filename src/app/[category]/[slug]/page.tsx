@@ -159,23 +159,13 @@ export default async function DetailPage({ params }: Props) {
                     <p className="mt-4 text-sm leading-7 text-stone-600">
                       {bottle.summary}
                     </p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-[1.05rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                          簡潔な説明
-                        </p>
-                        <p className="mt-2 text-sm leading-7 text-stone-600">
-                          {bottle.summary}
-                        </p>
-                      </div>
-                      <div className="rounded-[1.05rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                          蔵の意図
-                        </p>
-                        <p className="mt-2 text-sm leading-7 text-stone-600">
-                          {inferSakeBottleIntent(brand, bottle)}
-                        </p>
-                      </div>
+                    <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                        背景情報
+                      </p>
+                      <p className="mt-2 text-sm leading-7 text-stone-600">
+                        {bottle.summary} {inferSakeBottleIntent(brand, bottle)}
+                      </p>
                     </div>
                     <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-white/72 p-4">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
