@@ -87,9 +87,9 @@ export function SearchPanel({ items, className = "", title, description }: Props
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="銘柄名、都道府県、品種、ワイン名で検索"
-            className="w-full bg-transparent px-2 py-2 text-[15px] text-stone-900 outline-none placeholder:text-stone-400 sm:text-base"
-          />
+          placeholder="銘柄名、都道府県、品種、ワイナリー、産地で検索"
+          className="w-full bg-transparent px-2 py-2 text-[15px] text-stone-900 outline-none placeholder:text-stone-400 sm:text-base"
+        />
       </div>
 
       {query.trim() ? (

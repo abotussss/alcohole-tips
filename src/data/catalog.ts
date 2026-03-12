@@ -79,6 +79,36 @@ export type WineVariety = {
   countries: WineCountry[];
 };
 
+export type WineWineryEntry = {
+  slug: string;
+  name: string;
+  style: WineStyle;
+  varietySlugs: string[];
+  varietyNames: string[];
+  countries: string[];
+  regionLabels: string[];
+  bottleCount: number;
+  exampleBottle: string;
+  summary: string;
+  highlights: string[];
+  primaryVarietySlug: string;
+  primaryCountrySlug: string;
+};
+
+export type WineRegionEntry = {
+  slug: string;
+  style: WineStyle;
+  country: string;
+  countrySlug: string;
+  region: string;
+  varietySlugs: string[];
+  varietyNames: string[];
+  bottleCount: number;
+  summary: string;
+  highlights: string[];
+  primaryVarietySlug: string;
+};
+
 export const categories: AlcoholCategory[] = [
   {
     slug: "sake",
@@ -3977,6 +4007,171 @@ export function inferWineCountryContext(variety: WineVariety, country: WineCount
   const focusLine = aroma || point ? `${wineStyleFocusText[variety.style]} 特に ${point || aroma} を意識すると判断しやすいです。` : wineStyleFocusText[variety.style];
 
   return `${country.summary} ${nationTone} ${regionLine} ${focusLine}`;
+}
+
+export function inferWineWineryContext(
+  wineryName: string,
+  varietyNames: string[],
+  countries: string[],
+  regionLabels: string[],
+  bottleCount: number,
+) {
+  const varietyText =
+    varietyNames.length === 1
+      ? `${varietyNames[0]} の代表ワイナリーとして見やすい存在です。`
+      : `${varietyNames.slice(0, 2).join(" / ")} など複数の品種文脈で名前が出るワイナリーです。`;
+  const countryText =
+    countries.length === 1
+      ? `${countries[0]} の ${regionLabels[0] ?? "主要産地"} を軸に、その造り手らしい方向性を掴みやすいです。`
+      : `${countries.slice(0, 2).join(" / ")} で見られ、産地違いの表現も追いやすいです。`;
+
+  return `${wineryName} は ${varietyText} ${countryText} 代表商品は ${bottleCount} 本入っているので、好きな品種からワイナリーへ掘る入口に向いています。`;
+}
+
+export function inferWineRegionExplorerContext(
+  region: string,
+  country: string,
+  style: WineStyle,
+  varietyNames: string[],
+) {
+  const styleFocus = wineStyleFocusText[style];
+  const varietyText =
+    varietyNames.length === 1
+      ? `${varietyNames[0]} を基準に見比べやすい地域です。`
+      : `${varietyNames.slice(0, 2).join(" / ")} などを横断して見やすい地域です。`;
+
+  return `${country} の ${region} は、${varietyText} ${styleFocus}`;
+}
+
+export function getWineWineries(varieties: WineVariety[], style?: WineStyle): WineWineryEntry[] {
+  const targetVarieties = style ? varieties.filter((variety) => variety.style === style) : varieties;
+  const wineryMap = new Map<
+    string,
+    {
+      name: string;
+      style: WineStyle;
+      varietySlugs: Set<string>;
+      varietyNames: Set<string>;
+      countries: Set<string>;
+      regionLabels: Set<string>;
+      bottleCount: number;
+      exampleBottle: string;
+      primaryVarietySlug: string;
+      primaryCountrySlug: string;
+    }
+  >();
+
+  for (const variety of targetVarieties) {
+    for (const country of variety.countries) {
+      for (const bottle of country.bottles) {
+        const key = bottle.winery;
+        const current = wineryMap.get(key) ?? {
+          name: bottle.winery,
+          style: variety.style,
+          varietySlugs: new Set<string>(),
+          varietyNames: new Set<string>(),
+          countries: new Set<string>(),
+          regionLabels: new Set<string>(),
+          bottleCount: 0,
+          exampleBottle: bottle.name,
+          primaryVarietySlug: variety.slug,
+          primaryCountrySlug: country.slug,
+        };
+
+        current.varietySlugs.add(variety.slug);
+        current.varietyNames.add(variety.name);
+        current.countries.add(country.country);
+        current.regionLabels.add(country.region);
+        current.bottleCount += 1;
+        wineryMap.set(key, current);
+      }
+    }
+  }
+
+  return [...wineryMap.values()]
+    .map((entry) => {
+      const varietyNames = [...entry.varietyNames];
+      const countries = [...entry.countries];
+      const regionLabels = [...entry.regionLabels];
+
+      return {
+        slug: createDataSlug(`winery-${entry.name}`),
+        name: entry.name,
+        style: entry.style,
+        varietySlugs: [...entry.varietySlugs],
+        varietyNames,
+        countries,
+        regionLabels,
+        bottleCount: entry.bottleCount,
+        exampleBottle: entry.exampleBottle,
+        summary: inferWineWineryContext(entry.name, varietyNames, countries, regionLabels, entry.bottleCount),
+        highlights: [countries[0] ?? "産地", varietyNames[0] ?? "品種", `${entry.bottleCount} wines`],
+        primaryVarietySlug: entry.primaryVarietySlug,
+        primaryCountrySlug: entry.primaryCountrySlug,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "ja"));
+}
+
+export function getWineRegions(varieties: WineVariety[], style?: WineStyle): WineRegionEntry[] {
+  const targetVarieties = style ? varieties.filter((variety) => variety.style === style) : varieties;
+  const regionMap = new Map<
+    string,
+    {
+      style: WineStyle;
+      country: string;
+      countrySlug: string;
+      region: string;
+      varietySlugs: Set<string>;
+      varietyNames: Set<string>;
+      bottleCount: number;
+      primaryVarietySlug: string;
+    }
+  >();
+
+  for (const variety of targetVarieties) {
+    for (const country of variety.countries) {
+      const key = `${country.country}::${country.region}`;
+      const current = regionMap.get(key) ?? {
+        style: variety.style,
+        country: country.country,
+        countrySlug: country.slug,
+        region: country.region,
+        varietySlugs: new Set<string>(),
+        varietyNames: new Set<string>(),
+        bottleCount: 0,
+        primaryVarietySlug: variety.slug,
+      };
+
+      current.varietySlugs.add(variety.slug);
+      current.varietyNames.add(variety.name);
+      current.bottleCount += country.bottles.length;
+      regionMap.set(key, current);
+    }
+  }
+
+  return [...regionMap.values()]
+    .map((entry) => {
+      const varietyNames = [...entry.varietyNames];
+      return {
+        slug: createDataSlug(`region-${entry.country}-${entry.region}`),
+        style: entry.style,
+        country: entry.country,
+        countrySlug: entry.countrySlug,
+        region: entry.region,
+        varietySlugs: [...entry.varietySlugs],
+        varietyNames,
+        bottleCount: entry.bottleCount,
+        summary: inferWineRegionExplorerContext(entry.region, entry.country, entry.style, varietyNames),
+        highlights: [entry.country, varietyNames[0] ?? "品種", `${entry.bottleCount} wines`],
+        primaryVarietySlug: entry.primaryVarietySlug,
+      };
+    })
+    .sort((a, b) => a.country.localeCompare(b.country, "ja") || a.region.localeCompare(b.region, "ja"));
+}
+
+export function getFeaturedWineriesForVariety(variety: WineVariety) {
+  return getWineWineries([variety], variety.style).slice(0, 8);
 }
 
 export type SearchItem = {

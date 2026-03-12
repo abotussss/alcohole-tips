@@ -2,6 +2,8 @@ import {
   type SearchItem,
   getSakeBrandPrefecture,
   getSakeBrands,
+  getWineRegions,
+  getWineWineries,
   getWineVarieties,
   wineStyleCaptions,
 } from "@/data/catalog";
@@ -61,6 +63,32 @@ export function getSearchItems(): SearchItem[] {
     ]),
   ]);
 
+  const wineExplorerItems = getWineVarieties().flatMap((variety) => {
+    const wineryItems = getWineWineries([variety], variety.style).map((winery) => ({
+      id: `wine-winery-${variety.slug}-${winery.slug}`,
+      title: winery.name,
+      subtitle: `ワイナリー · ${wineStyleCaptions[variety.style]} · ${variety.name}`,
+      href: `/wine/${variety.slug}#${winery.primaryCountrySlug}`,
+      keywords: [
+        winery.name,
+        ...winery.countries,
+        ...winery.regionLabels,
+        variety.name,
+        ...winery.varietyNames,
+      ],
+    }));
+
+    const regionItems = getWineRegions([variety], variety.style).map((region) => ({
+      id: `wine-region-${variety.slug}-${region.slug}`,
+      title: `${region.country} ${region.region}`,
+      subtitle: `産地 · ${wineStyleCaptions[variety.style]} · ${variety.name}`,
+      href: `/wine/${variety.slug}#${region.countrySlug}`,
+      keywords: [region.country, region.region, variety.name, ...region.varietyNames],
+    }));
+
+    return [...wineryItems, ...regionItems];
+  });
+
   const prefectureItems = prefectureGuides.map((prefecture) => ({
     id: `prefecture-${prefecture.slug}`,
     title: prefecture.name,
@@ -69,5 +97,5 @@ export function getSearchItems(): SearchItem[] {
     keywords: [prefecture.name, prefecture.region, ...prefecture.featuredBrands],
   }));
 
-  return [...sakeItems, ...wineItems, ...prefectureItems];
+  return [...sakeItems, ...wineItems, ...wineExplorerItems, ...prefectureItems];
 }

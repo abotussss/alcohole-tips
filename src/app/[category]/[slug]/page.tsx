@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { DrinkIllustration } from "@/components/DrinkIllustration";
 import { RadarChart } from "@/components/RadarChart";
 import {
+  getFeaturedWineriesForVariety,
   getCategory,
   getDetailPaths,
   getSakeBrandPrefecture,
@@ -218,6 +219,8 @@ export default async function DetailPage({ params }: Props) {
       notFound();
     }
 
+    const featuredWineries = getFeaturedWineriesForVariety(variety);
+
     return (
       <main className="px-5 pb-16 pt-6 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-6xl">
@@ -308,6 +311,44 @@ export default async function DetailPage({ params }: Props) {
                     {fact.value}
                   </p>
                 </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="mx-auto mt-8 max-w-6xl">
+          <article className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+              注目ワイナリー
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+              {variety.name} で見ておきたい造り手
+            </h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {featuredWineries.map((winery) => (
+                <a
+                  key={winery.slug}
+                  href={`#${winery.primaryCountrySlug}`}
+                  className="rounded-[1.1rem] border border-stone-200/80 bg-[rgba(248,244,237,0.9)] p-4 sm:rounded-[1.3rem] sm:p-5"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                    {winery.countries.join(" / ")}
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-900">
+                    {winery.name}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-stone-600">{winery.summary}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {winery.highlights.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-white px-3 py-1 text-xs font-medium text-stone-700"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </a>
               ))}
             </div>
           </article>
