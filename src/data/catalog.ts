@@ -4095,7 +4095,7 @@ export function getWineWineries(varieties: WineVariety[], style?: WineStyle): Wi
       const regionLabels = [...entry.regionLabels];
 
       return {
-        slug: createDataSlug(`winery-${entry.name}`),
+        slug: createDataSlug(`winery-${entry.style}-${entry.name}`),
         name: entry.name,
         style: entry.style,
         varietySlugs: [...entry.varietySlugs],
@@ -4154,7 +4154,7 @@ export function getWineRegions(varieties: WineVariety[], style?: WineStyle): Win
     .map((entry) => {
       const varietyNames = [...entry.varietyNames];
       return {
-        slug: createDataSlug(`region-${entry.country}-${entry.region}`),
+        slug: createDataSlug(`region-${entry.style}-${entry.country}-${entry.region}`),
         style: entry.style,
         country: entry.country,
         countrySlug: entry.countrySlug,

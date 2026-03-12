@@ -149,6 +149,7 @@ export function WineExplorer({ varieties }: Props) {
   const filteredVarieties = varieties.filter((variety) => variety.style === style);
   const wineries = useMemo(() => getWineWineries(varieties, style), [style, varieties]);
   const regions = useMemo(() => getWineRegions(varieties, style), [style, varieties]);
+  const viewKey = `${style}-${mode}`;
 
   return (
     <section className="mx-auto mt-8 max-w-6xl max-md:rounded-[1.6rem] max-md:border max-md:border-white/50 max-md:bg-[rgba(247,242,234,0.84)] max-md:p-4 max-md:shadow-[0_16px_44px_rgba(48,29,19,0.08)] max-md:backdrop-blur-sm">
@@ -157,7 +158,10 @@ export function WineExplorer({ varieties }: Props) {
           <button
             key={tab}
             type="button"
-            onClick={() => setStyle(tab)}
+            onClick={() => {
+              setStyle(tab);
+              setMode("variety");
+            }}
             className={`rounded-[0.9rem] px-3 py-3 text-sm font-semibold transition sm:rounded-full sm:px-5 sm:py-3 ${
               style === tab
                 ? "bg-stone-900 text-stone-50 shadow-[0_10px_24px_rgba(48,29,19,0.18)]"
@@ -210,20 +214,20 @@ export function WineExplorer({ varieties }: Props) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 2xl:grid-cols-3">
+      <div key={viewKey} className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 2xl:grid-cols-3">
         {mode === "variety"
           ? filteredVarieties.map((variety) => (
-              <VarietyCard key={variety.slug} variety={variety} />
+              <VarietyCard key={`${style}-${variety.slug}`} variety={variety} />
             ))
           : null}
         {mode === "winery"
           ? wineries.map((winery) => (
-              <WineryCard key={winery.slug} winery={winery} />
+              <WineryCard key={`${style}-${winery.slug}`} winery={winery} />
             ))
           : null}
         {mode === "region"
           ? regions.map((region) => (
-              <RegionCard key={region.slug} region={region} />
+              <RegionCard key={`${style}-${region.slug}`} region={region} />
             ))
           : null}
       </div>
