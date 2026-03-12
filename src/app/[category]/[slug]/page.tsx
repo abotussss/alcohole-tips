@@ -9,6 +9,7 @@ import {
   getSakeBrandPrefecture,
   getSakeBrand,
   inferSakeBottleIntent,
+  inferWineCountryContext,
   getWineVariety,
   wineStyleLabels,
 } from "@/data/catalog";
@@ -345,7 +346,9 @@ export default async function DetailPage({ params }: Props) {
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                   特色
                 </p>
-                <p className="mt-2 text-sm leading-7 text-stone-600">{country.summary}</p>
+                <p className="mt-2 text-sm leading-7 text-stone-600">
+                  {inferWineCountryContext(variety, country)}
+                </p>
               </div>
 
               <div className="mt-5 grid gap-4 md:grid-cols-2">

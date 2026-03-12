@@ -3943,6 +3943,42 @@ export function inferSakeBottleIntent(brand: SakeBrand, bottle: SakeBottle) {
   return `蔵としては、${brand.name} らしさを素直に伝え、店頭で名前を見かけたときに選びやすい入口にする意図があります。`;
 }
 
+const wineCountryToneByNation: Record<string, string> = {
+  日本: "日本は繊細さと食中での収まり方が見えやすく、和食との距離感で違いを掴みやすいです。",
+  フランス: "フランスは産地ごとの輪郭が明確で、伝統的な基準として品種の骨格を把握しやすいです。",
+  イタリア: "イタリアは果実味と食中性の両立が見えやすく、親しみやすさの中に地方差が出ます。",
+  スペイン: "スペインは熟した果実味や飲みごたえが出やすく、温暖産地らしい厚みを見るのに向いています。",
+  ドイツ: "ドイツは酸と透明感の精度が高く、甘さや残糖の扱い方で個性が見えやすいです。",
+  オーストリア: "オーストリアは高い酸と直線的な輪郭が出やすく、ミネラル感やスパイス感を掴みやすいです。",
+  アメリカ: "アメリカは果実味が少し前に出やすく、分かりやすい華やかさや親しみやすさとして現れます。",
+  オーストラリア: "オーストラリアは果実感が明快で、モダンに整ったスタイルとして比較しやすいです。",
+  ニュージーランド: "ニュージーランドは冷涼感と明るい果実味の均衡が見えやすく、爽快さの基準になります。",
+  南アフリカ: "南アフリカは果実味と塩味感、旨みの同居が見えやすく、自然派文脈でも存在感があります。",
+  ジョージア: "ジョージアは発酵由来の旨みや素朴さが出やすく、造りの個性そのものを感じやすいです。",
+  ポルトガル: "ポルトガルは軽快さと果実味の均衡が見えやすく、親しみやすい酸の表現が魅力です。",
+  アルゼンチン: "アルゼンチンは果実味と厚みが出やすく、飲みごたえのあるスタイルとして比較しやすいです。",
+};
+
+const wineStyleFocusText: Record<WineStyle, string> = {
+  red: "赤では果実味、骨格、余韻の伸び方を見ると国ごとの差が分かりやすいです。",
+  white: "白では酸、香りの立ち方、ミネラル感や厚みの差を見ると方向性が掴みやすいです。",
+  rose: "ロゼでは果実の明るさとドライさのバランスを見ると、その国らしさが見えます。",
+  orange: "オレンジでは皮由来のタンニン、香りの複雑さ、旨みの残し方を見ると比較しやすいです。",
+  natural: "自然派では果実の素直さ、発酵由来のニュアンス、飲み心地の軽さや旨みを見ると違いが見えます。",
+};
+
+export function inferWineCountryContext(variety: WineVariety, country: WineCountry) {
+  const aroma = getFactValue(variety.facts, "香りの方向");
+  const point = getFactValue(variety.facts, "見るポイント");
+  const nationTone =
+    wineCountryToneByNation[country.country] ??
+    `${country.country} は ${country.region} を中心に、その土地らしい果実感や質感の差が見えやすい産地です。`;
+  const regionLine = `${country.region} では ${variety.name} の個性がどう出るかを見比べると、店頭で国名だけ見ても選びやすくなります。`;
+  const focusLine = aroma || point ? `${wineStyleFocusText[variety.style]} 特に ${point || aroma} を意識すると判断しやすいです。` : wineStyleFocusText[variety.style];
+
+  return `${country.summary} ${nationTone} ${regionLine} ${focusLine}`;
+}
+
 export type SearchItem = {
   id: string;
   title: string;
