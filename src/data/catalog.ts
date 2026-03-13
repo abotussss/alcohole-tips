@@ -4035,30 +4035,14 @@ export function inferSakeBottleIntent(brand: SakeBrand, bottle: SakeBottle) {
 
 export function inferSakeBottleDrinkingMoment(bottle: SakeBottle) {
   const descriptorText = getSakeDescriptorText(bottle);
-  const serveStyle = inferPrimarySakeServeStyle(bottle);
   const taste = inferSakeTaste(bottle);
-  const temperature = getFactValue(bottle.facts, "おすすめ温度");
 
   const timing = (() => {
     if (descriptorText.match(/スパークリング|発泡|にごり/)) return "乾杯や一杯目に。";
     if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒|夏酒/)) return "最初の一杯や前菜のタイミングに。";
-    if (serveStyle === "hot") return "食事の中盤以降に。";
-    if (serveStyle === "warm") return "食事と一緒にゆっくり。";
     if (taste === "sweet") return "単体で楽しむか、食後寄りに。";
     if (taste === "dry") return "食事の最初から中盤に。";
     return "食事と合わせて通しで。";
-  })();
-
-  const serving = (() => {
-    if (serveStyle === "hot") {
-      return temperature ? `${temperature} を目安に燗で。` : "燗で。";
-    }
-
-    if (serveStyle === "warm") {
-      return temperature ? `${temperature} を目安に常温寄りで。` : "少し温度を戻して。";
-    }
-
-    return temperature ? `${temperature} くらいに冷やして。` : "しっかり冷やして。";
   })();
 
   const pairing = (() => {
@@ -4068,10 +4052,11 @@ export function inferSakeBottleDrinkingMoment(bottle: SakeBottle) {
     if (taste === "dry") return "刺身、焼き魚、天ぷらなどの和食と。";
     if (descriptorText.match(/雄町|愛山|純米|特別純米/)) return "旨みのある料理や和食全般と。";
     if (descriptorText.match(/吟醸|大吟醸|純米大吟醸|華やか|果実感/)) return "前菜、白身魚、軽めの料理と。";
-    return "和食中心の食中酒として使いやすいです。";
+    return "";
   })();
 
-  return `${timing} ${serving} ${pairing}`;
+  const result = [timing, pairing].filter(Boolean).join(" ");
+  return result === "食事と合わせて通しで。" ? "" : result;
 }
 
 const wineCountryToneByNation: Record<string, string> = {

@@ -141,71 +141,79 @@ export default async function DetailPage({ params }: Props) {
 
           <div className="mt-6 grid gap-5">
             {brand.lineup.map((bottle) => (
-              <article
-                key={bottle.name}
-                id={anchorId(bottle.name)}
-                className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6"
-              >
-                <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-                  <div>
-                    <div className="flex items-start justify-between gap-4">
+              (() => {
+                const drinkingMoment = inferSakeBottleDrinkingMoment(bottle);
+
+                return (
+                  <article
+                    key={bottle.name}
+                    id={anchorId(bottle.name)}
+                    className="rounded-[1.35rem] border border-white/50 bg-white/80 p-4 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-6"
+                  >
+                    <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-                          {bottle.style}
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+                              {bottle.style}
+                            </p>
+                            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                              {bottle.name}
+                            </h3>
+                          </div>
+                        </div>
+                        <p className="mt-4 text-sm leading-7 text-stone-600">
+                          {bottle.summary}
                         </p>
-                        <h3 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-                          {bottle.name}
-                        </h3>
-                      </div>
-                    </div>
-                    <p className="mt-4 text-sm leading-7 text-stone-600">
-                      {bottle.summary}
-                    </p>
-                    <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                        背景情報
-                      </p>
-                      <p className="mt-2 text-sm leading-7 text-stone-600">
-                        {inferSakeBottleIntent(brand, bottle)}
-                      </p>
-                    </div>
-                    <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-white/72 p-4">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                        飲みどころ
-                      </p>
-                      <p className="mt-2 text-sm leading-7 text-stone-600">
-                        {inferSakeBottleDrinkingMoment(bottle)}
-                      </p>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {bottle.highlights.map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                      {bottle.facts.map((fact) => (
-                        <div key={fact.label} className="rounded-xl bg-stone-50 p-4">
+                        <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
                           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
-                            {fact.label}
+                            背景情報
                           </p>
-                          <p className="mt-2 text-sm font-semibold leading-6 text-stone-900">
-                            {fact.value}
+                          <p className="mt-2 text-sm leading-7 text-stone-600">
+                            {inferSakeBottleIntent(brand, bottle)}
                           </p>
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                        {drinkingMoment ? (
+                          <div className="mt-4 rounded-[1.05rem] border border-stone-200/80 bg-white/72 p-4">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                              飲みどころ
+                            </p>
+                            <p className="mt-2 text-sm leading-7 text-stone-600">
+                              {drinkingMoment}
+                            </p>
+                          </div>
+                        ) : null}
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {bottle.highlights.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                          {bottle.facts.map((fact) => (
+                            <div key={fact.label} className="rounded-xl bg-stone-50 p-4">
+                              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                                {fact.label}
+                              </p>
+                              <p className="mt-2 text-sm font-semibold leading-6 text-stone-900">
+                                {fact.value}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                  <div className="rounded-[1.2rem] bg-[rgba(248,244,237,0.95)] p-3 sm:rounded-[1.4rem] sm:p-4">
-                    <RadarChart metrics={bottle.radar} accent={brand.accent} compact />
-                  </div>
-                </div>
-              </article>
+                      <div className="rounded-[1.2rem] bg-[rgba(248,244,237,0.95)] p-3 sm:rounded-[1.4rem] sm:p-4">
+                        <RadarChart metrics={bottle.radar} accent={brand.accent} compact />
+                      </div>
+                    </div>
+                  </article>
+                );
+              })()
             ))}
           </div>
         </section>
