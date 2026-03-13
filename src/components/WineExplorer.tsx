@@ -208,12 +208,6 @@ export function WineExplorer({ varieties }: Props) {
         ))}
       </div>
 
-      <div className="mb-5 rounded-[1rem] border border-stone-200/80 bg-[rgba(248,244,237,0.92)] p-4">
-        <p className="text-sm leading-7 text-stone-600">
-          Vivino のように `品種` だけでなく、`ワイナリー` や `産地` からも入れるようにしています。好きな品種を見つけたら、そのまま有名ワイナリーや主要産地へ掘り下げられます。
-        </p>
-      </div>
-
       <div key={viewKey} className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 2xl:grid-cols-3">
         {mode === "variety"
           ? filteredVarieties.map((variety) => (

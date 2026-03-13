@@ -338,7 +338,7 @@ export function SakeExplorer({
               </article>
             ) : (
               <article className="rounded-[1.35rem] border border-dashed border-stone-300 bg-white/65 p-5 text-sm leading-7 text-stone-500 sm:rounded-[1.7rem] sm:p-6">
-                47都道府県から選べます。都道府県を選ぶと、代表銘柄例と、このアプリ内で見られる関連ブランドを表示します。
+                都道府県を選ぶと、代表銘柄と関連ブランドを表示します。
               </article>
             )}
 
@@ -350,7 +350,7 @@ export function SakeExplorer({
               </div>
             ) : selectedPrefecture ? (
               <article className="rounded-[1.7rem] border border-white/50 bg-white/82 p-6 text-sm leading-7 text-stone-500 shadow-[0_16px_44px_rgba(48,29,19,0.08)] backdrop-blur-sm">
-                この都道府県の代表銘柄データを整理中です。別の都道府県を選ぶと、詳細ブランドカードからそのまま銘柄ごとの種類まで確認できます。
+                この都道府県の代表銘柄データは準備中です。
               </article>
             ) : null}
           </div>

@@ -287,7 +287,7 @@ export default async function DetailPage({ params }: Props) {
               品種と産地の見どころ
             </h2>
             <p className="mt-4 text-sm leading-7 text-stone-600">
-              {variety.story} 品種の個性と国ごとの違いを先に把握しておくと、店頭でボトル名だけを見ても選びやすくなります。
+              {variety.story}
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               {variety.countries.map((country) => (

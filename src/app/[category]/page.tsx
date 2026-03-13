@@ -106,7 +106,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           items={searchItems}
           className="mx-auto mt-8 max-w-6xl"
           title="店で見る前に名前から探す"
-          description="日本酒の銘柄名、都道府県、ワインの品種・スタイル、ワイン名から曖昧検索できます。"
         />
       ) : null}
 
