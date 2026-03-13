@@ -3941,36 +3941,75 @@ export function inferSakeBottleIntent(brand: SakeBrand, bottle: SakeBottle) {
     getFactValue(bottle.facts, "シリーズ") ||
     getFactValue(bottle.facts, "特徴") ||
     getFactValue(bottle.facts, "酒米");
+  const rice = getFactValue(bottle.facts, "酒米");
+  const temperature = getFactValue(bottle.facts, "おすすめ温度");
+  const serveStyle = inferPrimarySakeServeStyle(bottle);
 
-  if (descriptorText.match(/スパークリング|発泡|にごり/)) {
-    return `${brand.name} の中でも軽やかさを前に出した一本で、乾杯酒として選びやすい立ち位置です。`;
-  }
+  const opening = (() => {
+    if (descriptorText.match(/スパークリング|発泡|にごり/)) {
+      return `${bottle.name} は、${brand.name} の中でも泡やにごりの柔らかさを前に出したラベルです。`;
+    }
 
-  if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒/)) {
-    return `${brand.name} のフレッシュさや開けたての勢いを、そのまま感じてもらうための一本です。`;
-  }
+    if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒/)) {
+      return `${bottle.name} は、搾りたての勢いやみずみずしさを見せる季節感の強い一本です。`;
+    }
 
-  if (descriptorText.match(/愛山|雄町|山田錦|出羽燦々|八反錦|千本錦|赤磐雄町|山田穂|香子|穂増/)) {
-    return `酒米違いによる香味の差を見せながら、${brand.name} の個性を別角度で伝えるためのラベルです。`;
-  }
+    if (rice) {
+      return `${bottle.name} は、${rice} の出方を通して ${brand.name} の個性を見せるラベルです。`;
+    }
 
-  if (descriptorText.match(/上位|最高峰|純米大吟醸|大吟醸|限定上位|上位定番/)) {
-    return `${brand.name} の上質さや完成度をはっきり見せる、上位レンジの一本です。`;
-  }
+    if (positioning && positioning !== rice) {
+      return `${bottle.name} は、${positioning} として置かれている ${brand.name} の一本です。`;
+    }
 
-  if (descriptorText.match(/特別純米|純米|食中|定番/)) {
-    return `${brand.name} の土台になる味わいを分かりやすく示した、食事に合わせやすい定番です。`;
-  }
+    if (method) {
+      return `${bottle.name} は、${method} で ${brand.name} の輪郭を見せるラベルです。`;
+    }
 
-  if (descriptorText.match(/吟醸|華やか|果実感|モダン/)) {
-    return `${brand.name} の香りや飲みやすさを前に出し、最初の一本としても印象を掴みやすい仕立てです。`;
-  }
+    return `${bottle.name} は、${brand.name} の方向性を素直に掴みやすい一本です。`;
+  })();
 
-  if (method || positioning) {
-    return `${method || positioning} の個性を通して、${brand.name} の方向性を分かりやすく示すラベルです。`;
-  }
+  const role = (() => {
+    if (descriptorText.match(/愛山|雄町|山田錦|出羽燦々|八反錦|千本錦|赤磐雄町|山田穂|香子|穂増/)) {
+      return "酒米違いで比べると、香りや旨みの置き方が見えやすいです。";
+    }
 
-  return `${brand.name} らしさを素直に伝える、入口として掴みやすい一本です。`;
+    if (descriptorText.match(/上位|最高峰|純米大吟醸|大吟醸|限定上位|上位定番/)) {
+      return "上位帯らしく、香りの整い方や余韻の長さに差が出やすいです。";
+    }
+
+    if (descriptorText.match(/特別純米|純米|食中|定番/)) {
+      return "定番帯として、食事に寄り添うまとまり方を見やすいタイプです。";
+    }
+
+    if (descriptorText.match(/吟醸|華やか|果実感|モダン/)) {
+      return "香りの出し方や飲みやすさで、このブランドらしさが掴みやすいです。";
+    }
+
+    if (method) {
+      return `${method} の造りが、そのまま質感に出やすい設計です。`;
+    }
+
+    return "";
+  })();
+
+  const serving = (() => {
+    if (serveStyle === "hot") {
+      return temperature ? `${temperature} 付近まで上げると輪郭がまとまりやすいです。` : "温度を上げると表情が開きやすいです。";
+    }
+
+    if (serveStyle === "warm") {
+      return temperature ? `${temperature} で旨みの出方が安定しやすいです。` : "少し温度を戻すと旨みが見えやすくなります。";
+    }
+
+    if (temperature) {
+      return `${temperature} で輪郭がきれいに出やすいタイプです。`;
+    }
+
+    return "冷やして飲むと輪郭を掴みやすいです。";
+  })();
+
+  return [opening, role, serving].filter(Boolean).join(" ");
 }
 
 const wineCountryToneByNation: Record<string, string> = {
