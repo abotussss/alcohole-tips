@@ -9,6 +9,7 @@ import {
   getDetailPaths,
   getSakeBrandPrefecture,
   getSakeBrand,
+  inferSakeBottleDrinkingMoment,
   inferSakeBottleIntent,
   inferWineCountryContext,
   getWineVariety,
@@ -173,7 +174,7 @@ export default async function DetailPage({ params }: Props) {
                         飲みどころ
                       </p>
                       <p className="mt-2 text-sm leading-7 text-stone-600">
-                        {bottle.notes}
+                        {inferSakeBottleDrinkingMoment(bottle)}
                       </p>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
