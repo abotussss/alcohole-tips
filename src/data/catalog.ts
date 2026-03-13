@@ -3942,74 +3942,95 @@ export function inferSakeBottleIntent(brand: SakeBrand, bottle: SakeBottle) {
     getFactValue(bottle.facts, "特徴") ||
     getFactValue(bottle.facts, "酒米");
   const rice = getFactValue(bottle.facts, "酒米");
-  const temperature = getFactValue(bottle.facts, "おすすめ温度");
-  const serveStyle = inferPrimarySakeServeStyle(bottle);
+  const brandAxis = (() => {
+    const brandText = `${brand.summary} ${brand.story}`;
+    if (brandText.match(/華やか|果実感|吟醸香/)) return "華やかな香り";
+    if (brandText.match(/透明感|クリーン|きれい/)) return "透明感";
+    if (brandText.match(/辛口|切れ|淡麗/)) return "切れ味";
+    if (brandText.match(/旨み|コク|厚み/)) return "旨みの芯";
+    if (brandText.match(/酸|モダン|フレッシュ/)) return "モダンな輪郭";
+    if (brandText.match(/食中|和食|合わせ/)) return "食中での収まり";
+    return `${brand.name} らしさ`;
+  })();
 
-  const opening = (() => {
-    if (descriptorText.match(/スパークリング|発泡|にごり/)) {
-      return `${bottle.name} は、${brand.name} の中でも泡やにごりの柔らかさを前に出したラベルです。`;
-    }
-
-    if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒/)) {
-      return `${bottle.name} は、搾りたての勢いやみずみずしさを見せる季節感の強い一本です。`;
-    }
-
-    if (rice) {
-      return `${bottle.name} は、${rice} の出方を通して ${brand.name} の個性を見せるラベルです。`;
-    }
-
-    if (positioning && positioning !== rice) {
-      return `${bottle.name} は、${positioning} として置かれている ${brand.name} の一本です。`;
-    }
-
-    if (method) {
-      return `${bottle.name} は、${method} で ${brand.name} の輪郭を見せるラベルです。`;
-    }
-
-    return `${bottle.name} は、${brand.name} の方向性を素直に掴みやすい一本です。`;
+  const riceCue = (() => {
+    if (!rice) return "";
+    if (rice.includes("山田錦")) return "上品さと滑らかさ";
+    if (rice.includes("雄町")) return "ふくらみと厚み";
+    if (rice.includes("愛山")) return "やわらかな甘みと華やぎ";
+    if (rice.includes("千本錦") || rice.includes("出羽燦々") || rice.includes("八反錦")) return "軽さと上品さ";
+    return `${rice} の個性`;
   })();
 
   const role = (() => {
-    if (descriptorText.match(/愛山|雄町|山田錦|出羽燦々|八反錦|千本錦|赤磐雄町|山田穂|香子|穂増/)) {
-      return "酒米違いで比べると、香りや旨みの置き方が見えやすいです。";
+    if (descriptorText.match(/スパークリング|発泡|にごり/)) {
+      return `${bottle.name} は、${brand.name} の中でも乾杯や最初の一杯に振った派生ラベルです。`;
+    }
+
+    if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒/)) {
+      return `${bottle.name} は、搾りたての勢いをそのまま見せる季節色の強い一本です。`;
+    }
+
+    if (descriptorText.match(/山廃|生もと|菩提酛/)) {
+      return `${bottle.name} は、発酵由来の厚みや酸を前に出すための伝統製法ラインです。`;
+    }
+
+    if (rice) {
+      return `${bottle.name} は、${rice} 違いで比べるための性格が明確なラベルです。`;
     }
 
     if (descriptorText.match(/上位|最高峰|純米大吟醸|大吟醸|限定上位|上位定番/)) {
-      return "上位帯らしく、香りの整い方や余韻の長さに差が出やすいです。";
+      return `${bottle.name} は、${brand.name} の完成度を高い水準で見せる上位レンジです。`;
     }
 
-    if (descriptorText.match(/特別純米|純米|食中|定番/)) {
-      return "定番帯として、食事に寄り添うまとまり方を見やすいタイプです。";
-    }
-
-    if (descriptorText.match(/吟醸|華やか|果実感|モダン/)) {
-      return "香りの出し方や飲みやすさで、このブランドらしさが掴みやすいです。";
+    if (positioning && positioning !== rice) {
+      return `${bottle.name} は、${positioning} として役割を切り分けた一本です。`;
     }
 
     if (method) {
-      return `${method} の造りが、そのまま質感に出やすい設計です。`;
+      return `${bottle.name} は、${method} でブランドの基準を見せるラベルです。`;
     }
 
-    return "";
+    return `${bottle.name} は、${brand.name} の定番的な立ち位置を担う一本です。`;
   })();
 
-  const serving = (() => {
-    if (serveStyle === "hot") {
-      return temperature ? `${temperature} 付近まで上げると輪郭がまとまりやすいです。` : "温度を上げると表情が開きやすいです。";
+  const intent = (() => {
+    if (descriptorText.match(/スパークリング|発泡|にごり/)) {
+      return `${brandAxis} をもっと軽やかに見せ、入り口を広げる意図があります。`;
     }
 
-    if (serveStyle === "warm") {
-      return temperature ? `${temperature} で旨みの出方が安定しやすいです。` : "少し温度を戻すと旨みが見えやすくなります。";
+    if (descriptorText.match(/生酒|しぼりたて|直汲|無濾過生原酒/)) {
+      return `${brandAxis} を整える前の生きた表情で伝えるために作られています。`;
     }
 
-    if (temperature) {
-      return `${temperature} で輪郭がきれいに出やすいタイプです。`;
+    if (descriptorText.match(/山廃|生もと|菩提酛/)) {
+      return `${brandAxis} を、より厚みや発酵感のある方向から見せる狙いです。`;
     }
 
-    return "冷やして飲むと輪郭を掴みやすいです。";
+    if (riceCue) {
+      return `${brandAxis} を ${riceCue} で言い換えるために置かれています。`;
+    }
+
+    if (descriptorText.match(/上位|最高峰|純米大吟醸|大吟醸|限定上位|上位定番/)) {
+      return `${brandAxis} を最も端正な形で見せるための位置づけです。`;
+    }
+
+    if (descriptorText.match(/特別純米|純米|食中|定番/)) {
+      return `${brandAxis} を日常の食事に落とし込みやすくするための定番設計です。`;
+    }
+
+    if (descriptorText.match(/吟醸|華やか|果実感|モダン/)) {
+      return `${brandAxis} を分かりやすく印象づけるための見せ場になっています。`;
+    }
+
+    if (method || positioning) {
+      return `${method || positioning} を通して、ブランドの軸をはっきり見せる狙いがあります。`;
+    }
+
+    return `${brand.name} の方向性を短く掴んでもらうための一本です。`;
   })();
 
-  return [opening, role, serving].filter(Boolean).join(" ");
+  return `${role} ${intent}`;
 }
 
 const wineCountryToneByNation: Record<string, string> = {
